@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Position Size Calculator | The Ultimate Algo Trading Handbook</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  
+  <style>
+    .calculator-container {
+      max-width: 600px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .allocation-display {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-primary);
+      background-color: var(--bg-secondary);
+      text-align: center;
+    }
+    
+    .alloc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .alloc-value {
+      font-size: 2.25rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--cyan-accent);
+      letter-spacing: -0.03em;
+    }
+    
+    .alloc-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    
+    .leverage-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../index.html" class="brand-wrapper">
+          <span class="brand-title">Algo Trading Handbook</span>
+          <span class="brand-sub">Aryan Jayanth / Calculators</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <a href="../index.html" class="btn btn-secondary" style="padding: 0.45rem 1rem; font-size: 0.82rem;">Back to Handbook</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Content container -->
+    <div class="calculator-container">
+      <a href="../index.html" class="back-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Handbook</span>
+      </a>
+      
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h2 style="font-size: 2.25rem;">Position Size Calculator</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Align entry size with account capacity and stop-loss distance to standardize risk exposures.</p>
+      </div>
+      
+      <div class="card">
+        <!-- Input 1 -->
+        <div class="form-group">
+          <label for="capital-input">Total Account Capital (₹)</label>
+          <input type="number" class="input-control" id="capital-input" value="500000" min="1000" max="100000000">
+        </div>
+        
+        <!-- Input 2 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="risk-input">Risk per Trade (%)</label>
+            <span id="risk-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">1.0%</span>
+          </div>
+          <input type="range" class="range-slider" id="risk-input" min="0.1" max="5.0" value="1.0" step="0.1">
+        </div>
+        
+        <!-- Input 3 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="stop-input">Stop-Loss Size (%)</label>
+            <span id="stop-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">2.5%</span>
+          </div>
+          <input type="range" class="range-slider" id="stop-input" min="0.5" max="15.0" value="2.5" step="0.25">
+        </div>
+        
+        <!-- Output widget -->
+        <div class="allocation-display">
+          <div class="alloc-grid">
+            <div style="border-right: 1px solid var(--border-primary);">
+              <div class="alloc-label">Capital Risked (₹)</div>
+              <div class="alloc-value" id="risk-cash">₹5,000</div>
+            </div>
+            <div>
+              <div class="alloc-label">Position Exposure (₹)</div>
+              <div class="alloc-value" id="position-cash" style="color: var(--cyan-accent);">₹200,000</div>
+            </div>
+          </div>
+          
+          <div class="alloc-label">System leverage multiplier</div>
+          <div class="leverage-badge" id="leverage-badge">0.40x Leverage</div>
+          
+          <!-- Risk meter progress bar -->
+          <div class="risk-meter" style="margin-top: 1.5rem;">
+            <div class="risk-meter-header">
+              <span class="risk-meter-label">Portfolio Sizing Exposure</span>
+              <span class="risk-meter-info" id="exposure-pct">40% allocated</span>
+            </div>
+            <div class="risk-meter-track">
+              <div class="risk-meter-fill" id="risk-meter-fill" style="width: 40%; background-color: var(--green-accent);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Math Box -->
+      <div class="card" style="margin-top: 1.5rem; background: transparent; padding: 1.25rem 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Formula Reference</span>
+        <code style="font-family: var(--font-mono); font-size: 0.85rem; display: block; padding: 0.5rem; background-color: var(--bg-tertiary);">Position Size = (Account Capital * Risk %) / Stop-Loss %</code>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../assets/js/core.js"></script>
+  <script>
+    const capitalInput = document.getElementById('capital-input');
+    const riskInput = document.getElementById('risk-input');
+    const stopInput = document.getElementById('stop-input');
+    
+    const riskVal = document.getElementById('risk-val');
+    const stopVal = document.getElementById('stop-val');
+    
+    const riskCash = document.getElementById('risk-cash');
+    const positionCash = document.getElementById('position-cash');
+    const leverageBadge = document.getElementById('leverage-badge');
+    const exposurePct = document.getElementById('exposure-pct');
+    const meterFill = document.getElementById('risk-meter-fill');
+    
+    function calculateSize() {
+      const capital = parseFloat(capitalInput.value) || 0;
+      const risk = parseFloat(riskInput.value) / 100;
+      const stop = parseFloat(stopInput.value) / 100;
+      
+      riskVal.textContent = (risk * 100).toFixed(1) + '%';
+      stopVal.textContent = (stop * 100).toFixed(2) + '%';
+      
+      if (capital <= 0 || stop <= 0) return;
+      
+      const riskAmount = capital * risk;
+      const positionAmount = riskAmount / stop;
+      const leverage = positionAmount / capital;
+      const allocatedPercent = (positionAmount / capital) * 100;
+      
+      riskCash.textContent = '₹' + Math.round(riskAmount).toLocaleString('en-IN');
+      positionCash.textContent = '₹' + Math.round(positionAmount).toLocaleString('en-IN');
+      
+      leverageBadge.textContent = leverage.toFixed(2) + 'x Leverage';
+      exposurePct.textContent = Math.round(allocatedPercent) + '% allocated';
+      
+      // Update styling based on leverage levels
+      const meterWidth = Math.min(100, allocatedPercent);
+      meterFill.style.width = meterWidth + '%';
+      
+      if (leverage < 1.0) {
+        leverageBadge.style.backgroundColor = "var(--green-glow)";
+        leverageBadge.style.color = "var(--green-accent)";
+        meterFill.style.backgroundColor = "var(--green-accent)";
+      } else if (leverage < 2.0) {
+        leverageBadge.style.backgroundColor = "var(--amber-glow)";
+        leverageBadge.style.color = "var(--amber-accent)";
+        meterFill.style.backgroundColor = "var(--amber-accent)";
+      } else {
+        leverageBadge.style.backgroundColor = "var(--red-glow)";
+        leverageBadge.style.color = "var(--red-accent)";
+        meterFill.style.backgroundColor = "var(--red-accent)";
+      }
+    }
+    
+    capitalInput.addEventListener('input', calculateSize);
+    riskInput.addEventListener('input', calculateSize);
+    stopInput.addEventListener('input', calculateSize);
+    
+    // Initial run
+    calculateSize();
+  </script>
+</body>
+</html>

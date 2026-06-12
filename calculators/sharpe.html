@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sharpe Ratio Calculator | The Ultimate Algo Trading Handbook</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  
+  <style>
+    .calculator-container {
+      max-width: 600px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .gauge-wrapper {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-primary);
+      background-color: var(--bg-secondary);
+      text-align: center;
+    }
+    
+    .gauge-value {
+      font-size: 3rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.04em;
+    }
+    
+    .gauge-status {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .gauge-bar {
+      height: 8px;
+      background-color: var(--bg-tertiary);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: 1rem 0;
+      position: relative;
+    }
+    
+    .gauge-marker {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background-color: var(--cyan-accent);
+      transition: width var(--transition-normal), background-color var(--transition-normal);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../index.html" class="brand-wrapper">
+          <span class="brand-title">Algo Trading Handbook</span>
+          <span class="brand-sub">Aryan Jayanth / Calculators</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <a href="../index.html" class="btn btn-secondary" style="padding: 0.45rem 1rem; font-size: 0.82rem;">Back to Handbook</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Content container -->
+    <div class="calculator-container">
+      <a href="../index.html" class="back-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Handbook</span>
+      </a>
+      
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h2 style="font-size: 2.25rem;">Sharpe Ratio Calculator</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Measure your strategy's risk-adjusted return profile. Calculates excess return per unit of volatility deviation.</p>
+      </div>
+      
+      <div class="card">
+        <!-- Input 1 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="return-input">Annualized Return (%)</label>
+            <span id="return-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">15%</span>
+          </div>
+          <input type="range" class="range-slider" id="return-input" min="0" max="60" value="15" step="0.5">
+        </div>
+        
+        <!-- Input 2 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="rf-input">Risk-Free Rate (%)</label>
+            <span id="rf-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">7%</span>
+          </div>
+          <input type="range" class="range-slider" id="rf-input" min="0" max="15" value="7" step="0.25">
+        </div>
+        
+        <!-- Input 3 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="vol-input">Annual Volatility (%)</label>
+            <span id="vol-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">16%</span>
+          </div>
+          <input type="range" class="range-slider" id="vol-input" min="2" max="50" value="16" step="0.5">
+        </div>
+        
+        <!-- Gauge Output -->
+        <div class="gauge-wrapper">
+          <div class="gauge-status" id="sharpe-status">Optimal</div>
+          <div class="gauge-value" id="sharpe-value">0.50</div>
+          
+          <div class="gauge-bar">
+            <div class="gauge-marker" id="gauge-marker"></div>
+          </div>
+          
+          <p id="sharpe-desc" style="font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.5;">Your returns match the standard market volatility profile.</p>
+        </div>
+      </div>
+      
+      <!-- Math Box -->
+      <div class="card" style="margin-top: 1.5rem; background: transparent; padding: 1.25rem 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Formula Reference</span>
+        <code style="font-family: var(--font-mono); font-size: 0.85rem; display: block; padding: 0.5rem; background-color: var(--bg-tertiary);">Sharpe Ratio = (Expected Return - Risk-Free Rate) / Volatility</code>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../assets/js/core.js"></script>
+  <script>
+    const retInput = document.getElementById('return-input');
+    const rfInput = document.getElementById('rf-input');
+    const volInput = document.getElementById('vol-input');
+    
+    const retVal = document.getElementById('return-val');
+    const rfVal = document.getElementById('rf-val');
+    const volVal = document.getElementById('vol-val');
+    
+    const sharpeValue = document.getElementById('sharpe-value');
+    const sharpeStatus = document.getElementById('sharpe-status');
+    const sharpeDesc = document.getElementById('sharpe-desc');
+    const marker = document.getElementById('gauge-marker');
+    
+    function calculateSharpe() {
+      const R = parseFloat(retInput.value);
+      const Rf = parseFloat(rfInput.value);
+      const V = parseFloat(volInput.value);
+      
+      retVal.textContent = R.toFixed(1) + '%';
+      rfVal.textContent = Rf.toFixed(2) + '%';
+      volVal.textContent = V.toFixed(1) + '%';
+      
+      const sharpe = (R - Rf) / V;
+      
+      sharpeValue.textContent = sharpe.toFixed(2);
+      
+      // Update gauge display and colors
+      let scorePct = Math.max(0, Math.min(100, (sharpe + 0.5) / 3.5 * 100)); // Map -0.5 to 3.0 on 0-100% scale
+      marker.style.width = scorePct + '%';
+      
+      if (sharpe < 0) {
+        sharpeStatus.textContent = "Underperforming";
+        sharpeStatus.style.color = "var(--red-accent)";
+        marker.style.backgroundColor = "var(--red-accent)";
+        sharpeDesc.textContent = "The strategy loses money compared to a risk-free investment after adjusting for risk. Needs immediate revisions.";
+      } else if (sharpe < 1.0) {
+        sharpeStatus.textContent = "Sub-optimal";
+        sharpeStatus.style.color = "var(--amber-accent)";
+        marker.style.backgroundColor = "var(--amber-accent)";
+        sharpeDesc.textContent = "Acceptable risk profile, but returns do not fully justify volatility risks. Suitable for casual portfolios.";
+      } else if (sharpe < 2.0) {
+        sharpeStatus.textContent = "Excellent (Quant Target)";
+        sharpeStatus.style.color = "var(--cyan-accent)";
+        marker.style.backgroundColor = "var(--cyan-accent)";
+        sharpeDesc.textContent = "A strong performance profile. Your model yields consistent returns relative to volatility risk.";
+      } else {
+        sharpeStatus.textContent = "Legendary (Institutional)";
+        sharpeStatus.style.color = "var(--green-accent)";
+        marker.style.backgroundColor = "var(--green-accent)";
+        sharpeDesc.textContent = "Exceptional risk-adjusted metrics. Verify that survivorship bias or lookahead flaws are not inflating results.";
+      }
+    }
+    
+    retInput.addEventListener('input', calculateSharpe);
+    rfInput.addEventListener('input', calculateSharpe);
+    volInput.addEventListener('input', calculateSharpe);
+    
+    // Initial run
+    calculateSharpe();
+  </script>
+</body>
+</html>

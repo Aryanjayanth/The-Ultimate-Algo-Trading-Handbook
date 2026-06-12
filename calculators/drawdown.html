@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drawdown & Recovery Calculator | The Ultimate Algo Trading Handbook</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  
+  <style>
+    .calculator-container {
+      max-width: 600px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .allocation-display {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-primary);
+      background-color: var(--bg-secondary);
+      text-align: center;
+    }
+    
+    .alloc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .alloc-value {
+      font-size: 2.25rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--red-accent);
+      letter-spacing: -0.03em;
+    }
+    
+    .alloc-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    
+    .recovery-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+      color: #030712;
+      background: var(--amber-accent);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../index.html" class="brand-wrapper">
+          <span class="brand-title">Algo Trading Handbook</span>
+          <span class="brand-sub">Aryan Jayanth / Calculators</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <a href="../index.html" class="btn btn-secondary" style="padding: 0.45rem 1rem; font-size: 0.82rem;">Back to Handbook</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Content container -->
+    <div class="calculator-container">
+      <a href="../index.html" class="back-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Handbook</span>
+      </a>
+      
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h2 style="font-size: 2.25rem;">Drawdown & Recovery Calculator</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Understand the mathematics of compounding losses. Measures required return relative to portfolio drawdown depths.</p>
+      </div>
+      
+      <div class="card">
+        <!-- Input 1 -->
+        <div class="form-group">
+          <label for="peak-input">Peak Portfolio Equity (₹)</label>
+          <input type="number" class="input-control" id="peak-input" value="100000" min="100" max="100000000">
+        </div>
+        
+        <!-- Input 2 -->
+        <div class="form-group">
+          <label for="valley-input">Lowest Equity Level (₹)</label>
+          <input type="number" class="input-control" id="valley-input" value="80000" min="10" max="100000000">
+        </div>
+        
+        <!-- Output widget -->
+        <div class="allocation-display">
+          <div class="alloc-grid">
+            <div style="border-right: 1px solid var(--border-primary);">
+              <div class="alloc-label">Drawdown Percentage</div>
+              <div class="alloc-value" id="drawdown-pct">20.00%</div>
+            </div>
+            <div>
+              <div class="alloc-label">Required Recovery Return</div>
+              <div class="alloc-value" id="recovery-pct" style="color: var(--amber-accent);">25.00%</div>
+            </div>
+          </div>
+          
+          <div class="alloc-label" style="margin-top: 1rem;">compounding hurdle rate</div>
+          <div class="recovery-badge" id="recovery-badge">Requires +25.0% return</div>
+          
+          <p id="drawdown-desc" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.5;">A 20% drawdown requires a 25% return just to break even. Sizing risk appropriately prevents exponential recovery hurdles.</p>
+        </div>
+      </div>
+      
+      <!-- Math Box -->
+      <div class="card" style="margin-top: 1.5rem; background: transparent; padding: 1.25rem 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Formula Reference</span>
+        <code style="font-family: var(--font-mono); font-size: 0.82rem; display: block; padding: 0.5rem; background-color: var(--bg-tertiary);">Drawdown = (Peak - Valley) / Peak<br>Recovery Required = (Peak / Valley) - 1 = Drawdown / (1 - Drawdown)</code>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../assets/js/core.js"></script>
+  <script>
+    const peakInput = document.getElementById('peak-input');
+    const valleyInput = document.getElementById('valley-input');
+    
+    const drawdownPct = document.getElementById('drawdown-pct');
+    const recoveryPct = document.getElementById('recovery-pct');
+    const recoveryBadge = document.getElementById('recovery-badge');
+    const drawdownDesc = document.getElementById('drawdown-desc');
+    
+    function calculateDrawdown() {
+      const peak = parseFloat(peakInput.value) || 1000;
+      const valley = parseFloat(valleyInput.value) || 1000;
+      
+      if (peak <= 0 || valley <= 0 || valley > peak) {
+        drawdownPct.textContent = "0.00%";
+        recoveryPct.textContent = "0.00%";
+        recoveryBadge.textContent = "Invalid range";
+        drawdownDesc.textContent = "Valley value cannot be larger than the peak equity level.";
+        return;
+      }
+      
+      const dd = (peak - valley) / peak;
+      const rec = (peak / valley) - 1;
+      
+      drawdownPct.textContent = (dd * 100).toFixed(2) + '%';
+      recoveryPct.textContent = (rec * 100).toFixed(2) + '%';
+      
+      recoveryBadge.textContent = `Requires +${(rec * 100).toFixed(1)}% Return`;
+      
+      if (dd < 0.1) {
+        drawdownPct.style.color = "var(--green-accent)";
+        recoveryBadge.style.backgroundColor = "var(--green-glow)";
+        recoveryBadge.style.color = "var(--green-accent)";
+        drawdownDesc.textContent = `Mild drawdown of ${(dd*100).toFixed(1)}%. Easily recovered.`;
+      } else if (dd < 0.25) {
+        drawdownPct.style.color = "var(--cyan-accent)";
+        recoveryBadge.style.backgroundColor = "var(--cyan-glow)";
+        recoveryBadge.style.color = "var(--cyan-accent)";
+        drawdownDesc.textContent = `Standard trading drawdown. Sizing controls can recover this over standard market cycles.`;
+      } else if (dd < 0.5) {
+        drawdownPct.style.color = "var(--amber-accent)";
+        recoveryBadge.style.backgroundColor = "var(--amber-glow)";
+        recoveryBadge.style.color = "var(--amber-accent)";
+        drawdownDesc.textContent = `Deep drawdown. Hurdle rate is rising rapidly: a ${(dd*100).toFixed(0)}% loss requires ${(rec*100).toFixed(0)}% gains just to break even.`;
+      } else {
+        drawdownPct.style.color = "var(--red-accent)";
+        recoveryBadge.style.backgroundColor = "var(--red-glow)";
+        recoveryBadge.style.color = "var(--red-accent)";
+        drawdownDesc.textContent = `Ruin territory. A ${(dd*100).toFixed(0)}% loss requires ${(rec*100).toFixed(0)}% gains just to recover previous values. Standard portfolios rarely recover from these levels.`;
+      }
+    }
+    
+    peakInput.addEventListener('input', calculateDrawdown);
+    valleyInput.addEventListener('input', calculateDrawdown);
+    
+    // Initial run
+    calculateDrawdown();
+  </script>
+</body>
+</html>

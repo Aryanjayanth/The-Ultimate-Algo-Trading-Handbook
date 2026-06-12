@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algo Trading — Complete Reference</title>
+<style>
+:root[data-theme="dark"] {
+  --bg:        #0A0E14;
+  --bg2:       #111720;
+  --bg3:       #1A2232;
+  --bg4:       #212d40;
+  --border:    #1e2d42;
+  --border2:   #2a3f5a;
+  --text:      #c8d8e8;
+  --muted:     #6b849f;
+  --heading:   #e8f4ff;
+  --cyan:      #00D4FF;
+  --cyan-dim:  rgba(0,212,255,0.12);
+  --amber:     #F5A623;
+  --amber-dim: rgba(245,166,35,0.12);
+  --green:     #00E676;
+  --green-dim: rgba(0,230,118,0.12);
+  --red:       #FF5252;
+  --red-dim:   rgba(255,82,82,0.12);
+  --purple:    #BB86FC;
+  --purple-dim:rgba(187,134,252,0.12);
+  --card-bg:   #111720;
+  --code-bg:   #060A10;
+  --nav-bg:    #0d1420;
+  --input-bg:  #1A2232;
+  --shadow:    0 4px 24px rgba(0,0,0,0.4);
+}
+:root[data-theme="light"] {
+  --bg:        #f0f4f8;
+  --bg2:       #ffffff;
+  --bg3:       #e8eef5;
+  --bg4:       #dde5ee;
+  --border:    #cdd8e6;
+  --border2:   #b8c8da;
+  --text:      #2a3a4a;
+  --muted:     #7a90a8;
+  --heading:   #0f1f30;
+  --cyan:      #0070a8;
+  --cyan-dim:  rgba(0,112,168,0.08);
+  --amber:     #b06000;
+  --amber-dim: rgba(176,96,0,0.08);
+  --green:     #006e30;
+  --green-dim: rgba(0,110,48,0.08);
+  --red:       #c0122a;
+  --red-dim:   rgba(192,18,42,0.08);
+  --purple:    #6030b0;
+  --purple-dim:rgba(96,48,176,0.08);
+  --card-bg:   #ffffff;
+  --code-bg:   #f4f7fa;
+  --nav-bg:    #1a2a3a;
+  --input-bg:  #e8eef5;
+  --shadow:    0 4px 24px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  display: flex;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ── NAV ── */
+nav {
+  width: 228px;
+  min-height: 100vh;
+  background: var(--nav-bg);
+  border-right: 1px solid var(--border);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.nav-top {
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+:root[data-theme="light"] .nav-top { border-bottom-color: rgba(0,0,0,0.08); }
+.nav-brand {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+:root[data-theme="light"] .nav-brand { color: #ffffff; }
+.nav-sub { font-size: 11px; color: rgba(255,255,255,0.35); }
+:root[data-theme="light"] .nav-sub { color: rgba(255,255,255,0.5); }
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle-track {
+  width: 34px; height: 18px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 9px;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+:root[data-theme="light"] .toggle-track { background: rgba(255,255,255,0.3); }
+.toggle-thumb {
+  width: 12px; height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px; left: 3px;
+  transition: transform 0.2s;
+}
+:root[data-theme="light"] .toggle-thumb { transform: translateX(16px); }
+.toggle-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  letter-spacing: 0.05em;
+}
+
+.nav-section {
+  font-size: 10px;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  color: rgba(255,255,255,0.2);
+  padding: 14px 18px 4px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.12s, background 0.12s, border-color 0.12s;
+  border-left: 2px solid transparent;
+}
+nav a:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
+nav a.active { color: var(--cyan); border-left-color: var(--cyan); background: rgba(0,212,255,0.07); }
+:root[data-theme="light"] nav a.active { color: #7dd8f8; border-left-color: #7dd8f8; }
+.nav-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.4; flex-shrink: 0; }
+
+/* ── MAIN ── */
+main {
+  flex: 1;
+  max-width: 960px;
+  padding: 44px 52px;
+  overflow-x: hidden;
+}
+section { margin-bottom: 76px; scroll-margin-top: 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  padding: 3px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+h2 { font-size: 22px; font-weight: 700; color: var(--heading); letter-spacing: -0.025em; }
+h3 { font-size: 14px; font-weight: 600; color: var(--heading); margin: 32px 0 10px; letter-spacing: 0.01em; }
+h3::before { content: '▸ '; color: var(--cyan); font-size: 12px; }
+p { color: var(--text); margin-bottom: 12px; }
+strong { color: var(--heading); font-weight: 600; }
+em { color: var(--amber); font-style: normal; font-weight: 500; }
+code {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 11px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--cyan);
+}
+
+/* ── HERO ── */
+.hero {
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--heading);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+.hero p { font-size: 15px; color: var(--muted); max-width: 560px; }
+.badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.badge {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+.b-cyan   { background: var(--cyan-dim);   color: var(--cyan);   border: 1px solid rgba(0,212,255,0.2); }
+.b-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(0,230,118,0.2); }
+.b-amber  { background: var(--amber-dim);  color: var(--amber);  border: 1px solid rgba(245,166,35,0.2); }
+.b-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(187,134,252,0.2); }
+
+/* ── FLOW DIAGRAM ── */
+.flow-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 20px 0 28px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.flow-step {
+  flex: 1;
+  min-width: 120px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative;
+}
+.flow-step:hover { border-color: var(--cyan); background: var(--bg3); }
+.flow-step.active { border-color: var(--cyan); background: var(--cyan-dim); }
+.flow-num {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  margin-bottom: 4px;
+  display: block;
+}
+.flow-title { font-size: 12px; font-weight: 600; color: var(--heading); display: block; }
+.flow-sub { font-size: 11px; color: var(--muted); margin-top: 3px; display: block; }
+.flow-detail {
+  display: none;
+  margin-top: 0;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 8px;
+}
+.flow-detail.active { display: block; }
+.flow-detail h4 { font-size: 14px; font-weight: 600; color: var(--heading); margin-bottom: 8px; }
+.flow-detail p { font-size: 13px; color: var(--text); margin-bottom: 8px; }
+
+/* ── CARDS ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 14px 0; }
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  transition: border-color 0.15s;
+}
+.card:hover { border-color: var(--border2); }
+.card-title {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 10px;
+  color: var(--cyan);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+.card p { font-size: 13px; color: var(--muted); margin: 0; }
+.card strong { color: var(--text); }
+
+/* ── METRIC CARDS ── */
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 10px; margin: 14px 0; }
+.metric-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.metric-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.metric-value {
+  font-size: 24px;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.metric-note { font-size: 11px; color: var(--muted); margin-top: 5px; }
+.good   { color: var(--green); }
+.warn   { color: var(--amber); }
+.bad    { color: var(--red); }
+.info   { color: var(--cyan); }
+.purple { color: var(--purple); }
+
+/* ── FORMULA ── */
+.formula {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 12px;
+  color: var(--amber);
+  line-height: 1.8;
+}
+.formula .label {
+  font-size: 9px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── CALLOUTS ── */
+.callout {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.callout-warn   { background: var(--amber-dim);  border: 1px solid rgba(245,166,35,0.2);  color: var(--amber); }
+.callout-danger { background: var(--red-dim);    border: 1px solid rgba(255,82,82,0.2);   color: var(--red); }
+.callout-info   { background: var(--cyan-dim);   border: 1px solid rgba(0,212,255,0.2);   color: var(--cyan); }
+.callout-good   { background: var(--green-dim);  border: 1px solid rgba(0,230,118,0.2);   color: var(--green); }
+.callout strong { color: inherit; font-weight: 700; }
+.callout p { color: inherit; margin-bottom: 6px; }
+.callout p:last-child { margin-bottom: 0; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 14px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  background: var(--bg3);
+  color: var(--cyan);
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+}
+td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+tr:hover td { background: var(--bg3); }
+
+/* ── CODE BLOCKS ── */
+.code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 8px 8px 0;
+  margin: 14px 0;
+  overflow: hidden;
+}
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.12s;
+}
+.code-header:hover { color: var(--text); }
+.code-lang { color: var(--cyan); margin-right: 8px; }
+.code-body { padding: 16px; overflow-x: auto; display: none; }
+.code-body.open { display: block; }
+.code-body pre {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre;
+}
+.kw  { color: var(--purple); }
+.fn  { color: var(--cyan); }
+.str { color: var(--green); }
+.cm  { color: var(--muted); font-style: italic; }
+.num { color: var(--amber); }
+
+/* ── STRATEGY TABS ── */
+.stab-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.stab {
+  padding: 6px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.stab:hover { color: var(--text); border-color: var(--cyan); }
+.stab.active { background: var(--cyan-dim); color: var(--cyan); border-color: var(--cyan); }
+.strat-panel { display: none; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+.strat-panel.active { display: block; }
+.strat-panel h4 { color: var(--cyan); font-family: 'JetBrains Mono','Fira Code',monospace; font-size: 13px; margin-bottom: 10px; }
+.meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+
+/* ── KELLY CALC ── */
+.calc-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 14px 0;
+}
+.slider-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; margin-bottom: 16px; }
+.slider-group label { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono','Fira Code',monospace; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 5px; }
+.slider-group input[type=range] { width: 100%; accent-color: var(--cyan); }
+.slider-val { font-family: 'JetBrains Mono','Fira Code',monospace; font-size: 13px; color: var(--cyan); margin-top: 3px; }
+
+/* ── RISK BARS ── */
+.risk-bar { margin: 8px 0; }
+.rb-top { display: flex; justify-content: space-between; font-size: 12px; font-family: 'JetBrains Mono','Fira Code',monospace; margin-bottom: 4px; }
+.rb-track { height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+.rb-fill { height: 100%; border-radius: 3px; }
+
+/* ── EQUITY CANVAS ── */
+#equity-canvas {
+  width: 100%;
+  height: 180px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  display: block;
+  margin: 12px 0;
+}
+
+/* ── RESULT BLOCK ── */
+.result-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.result-block .good-line { color: var(--green); }
+.result-block .bad-line  { color: var(--red); }
+.result-block .head-line { color: var(--cyan); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+@media (max-width: 800px) {
+  nav { display: none; }
+  main { padding: 24px 18px; }
+}
+</style>
+
+<style>
+/* Aryan Upgrade Pack */
+body{
+background:
+radial-gradient(circle at top right, rgba(0,212,255,.08), transparent 30%),
+radial-gradient(circle at bottom left, rgba(187,134,252,.08), transparent 30%),
+var(--bg);
+}
+.hero{
+position:relative;
+overflow:hidden;
+}
+.hero::before{
+content:'';
+position:absolute;
+inset:-100px;
+background:conic-gradient(from 180deg, transparent, rgba(0,212,255,.08), transparent);
+animation:spin 20s linear infinite;
+pointer-events:none;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card,.flow-step,.metric-card{
+transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.card:hover,.flow-step:hover,.metric-card:hover{
+transform:translateY(-6px);
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+section{
+animation:fadeUp .6s ease both;
+}
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:none}
+}
+.footer-aryan{
+margin-top:80px;
+padding:40px 20px;
+text-align:center;
+border-top:1px solid var(--border);
+color:var(--muted);
+}
+.footer-aryan h3{
+margin-bottom:12px;
+}
+@media(max-width:800px){
+.hero h1{font-size:28px}
+.card-grid,.metric-grid{
+grid-template-columns:1fr;
+}
+main{
+padding:20px 16px !important;
+}
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-top">
+    <div class="nav-brand">Algo Trading</div>
+    <div class="nav-sub">Complete Reference v2.0</div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span class="toggle-label" id="theme-label">LIGHT MODE</span>
+    </div>
+  </div>
+
+  <div class="nav-section">Foundations</div>
+  <a href="#overview"   onclick="setActive(this)"><span class="nav-dot"></span>00 — Big Picture</a>
+  <a href="#workflow"   onclick="setActive(this)"><span class="nav-dot"></span>01 — 6-Stage Workflow</a>
+  <a href="#first-code" onclick="setActive(this)"><span class="nav-dot"></span>02 — First Strategy</a>
+  <a href="#reading"    onclick="setActive(this)"><span class="nav-dot"></span>03 — Reading Results</a>
+
+  <div class="nav-section">Going Deeper</div>
+  <a href="#strategies" onclick="setActive(this)"><span class="nav-dot"></span>04 — Strategy Types</a>
+  <a href="#indicators" onclick="setActive(this)"><span class="nav-dot"></span>05 — Indicator Math</a>
+  <a href="#signals"    onclick="setActive(this)"><span class="nav-dot"></span>06 — Signal Engineering</a>
+
+  <div class="nav-section">Execution</div>
+  <a href="#backtesting" onclick="setActive(this)"><span class="nav-dot"></span>07 — Backtesting Right</a>
+  <a href="#risk"        onclick="setActive(this)"><span class="nav-dot"></span>08 — Risk & Sizing</a>
+
+  <div class="nav-section">Output & Code</div>
+  <a href="#analytics" onclick="setActive(this)"><span class="nav-dot"></span>09 — Analytics Decoded</a>
+  <a href="#traps"     onclick="setActive(this)"><span class="nav-dot"></span>10 — Common Traps</a>
+  <a href="#toolkit"   onclick="setActive(this)"><span class="nav-dot"></span>11 — Python Toolkit</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Algorithmic Trading / Complete Reference</div>
+  <h1>Think like a quant.<br>Trade like a machine.</h1>
+  <p>From zero to walk-forward optimization — every concept, formula, and code snippet you need. Built for Python + yfinance on TradingView free plan. Return to this whenever you level up.</p>
+  <div class="badge-row">
+    <span class="badge b-cyan">Python + yfinance</span>
+    <span class="badge b-green">NSE / NYSE / Crypto</span>
+    <span class="badge b-amber">TradingView Free</span>
+    <span class="badge b-purple">Beginners → Advanced</span>
+  </div>
+</div>
+
+
+<!-- SECTION 0: BIG PICTURE -->
+<section id="overview">
+  <div class="section-header">
+    <span class="section-num">00</span>
+    <h2>What Algo Trading Actually Is</h2>
+  </div>
+
+  <p>Algo trading means one thing: <strong>you write rules, the computer follows them exactly, and you measure whether those rules made money.</strong> No emotion. No gut feeling. No "I think this stock looks good." Just rules and math.</p>
+
+  <p>A human trader might think "RELIANCE looks strong today, I'll buy some." An algo trader says: <em>"Buy RELIANCE when its 10-day average price crosses above its 50-day average, with volume at least 20% above its 20-day average volume. Sell when the 10-day crosses back below the 50-day."</em> That's a strategy.</p>
+
+  <h3>Why does this work at all?</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Markets aren't perfectly efficient</div>
+      <p>If prices were random, no strategy could work. But <strong>human psychology creates repeatable patterns</strong> — panic selling, momentum chasing, overreaction to news.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Institutions move slowly</div>
+      <p>Large funds can't buy ₹10,000 crore overnight — they take weeks. This creates <strong>persistent price trends</strong> that systematic strategies can ride.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Discipline beats intelligence</div>
+      <p>A mediocre strategy applied with <strong>perfect discipline beats a great strategy</strong> applied inconsistently. Algos never have bad days or FOMO.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Speed and scale</div>
+      <p>A computer can <strong>scan 500 stocks in seconds</strong>, apply 20 conditions to each, and execute in milliseconds. Humans can't compete on breadth.</p>
+    </div>
+  </div>
+
+  <h3>What you actually need</h3>
+  <div class="callout callout-good">
+    <strong>Minimum viable setup (what you already have):</strong> Python + yfinance + pandas. That's enough to build, test, and analyse real strategies on real data. You don't need a Bloomberg terminal, API access to broker data, or ₹10 lakh capital to start learning. Free TradingView is perfect for visual validation of your logic.
+  </div>
+</section>
+
+
+<!-- SECTION 1: WORKFLOW -->
+<section id="workflow">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>The 6-Stage Workflow</h2>
+  </div>
+
+  <p>Every algo trading operation — from a retail Python script to a hedge fund — follows this loop. Click each stage to see what actually happens there.</p>
+
+  <div class="flow-row" id="flow-steps">
+    <div class="flow-step active" onclick="showFlow(0, this)">
+      <span class="flow-num">01</span>
+      <span class="flow-title">Idea</span>
+      <span class="flow-sub">What edge?</span>
+    </div>
+    <div class="flow-step" onclick="showFlow(1, this)">
+      <span class="flow-num">02</span>
+      <span class="flow-title">Get Data</span>
+      <span class="flow-sub">yfinance</span>
+    </div>
+    <div class="flow-step" onclick="showFlow(2, this)">
+      <span class="flow-num">03</span>
+      <span class="flow-title">Build Strategy</span>
+      <span class="flow-sub">Rules → signals</span>
+    </div>
+    <div class="flow-step" onclick="showFlow(3, this)">
+      <span class="flow-num">04</span>
+      <span class="flow-title">Backtest</span>
+      <span class="flow-sub">Test on history</span>
+    </div>
+    <div class="flow-step" onclick="showFlow(4, this)">
+      <span class="flow-num">05</span>
+      <span class="flow-title">Analyse</span>
+      <span class="flow-sub">Sharpe, drawdown…</span>
+    </div>
+    <div class="flow-step" onclick="showFlow(5, this)">
+      <span class="flow-num">06</span>
+      <span class="flow-title">Deploy / Iterate</span>
+      <span class="flow-sub">Paper → live</span>
+    </div>
+  </div>
+
+  <div id="flow-detail-0" class="flow-detail active">
+    <h4>Stage 1 — The Idea (hypothesis)</h4>
+    <p>Everything starts with a hypothesis about why a pattern should exist. "Stocks that cross above their 50-day average tend to keep rising." "When RSI drops below 30, the stock is oversold and usually bounces back." These conditions are called <strong>signals</strong>.</p>
+    <p>Good ideas come from: academic research (momentum, mean-reversion are extensively documented), market microstructure (how liquidity works), or just observing price patterns. Bad ideas come from random chart gazing without a why.</p>
+    <div class="callout callout-info"><strong>Key question:</strong> Why should this edge exist? If you can't answer that, the backtest result is probably noise.</div>
+  </div>
+  <div id="flow-detail-1" class="flow-detail">
+    <h4>Stage 2 — Get Data</h4>
+    <p>With <code>yfinance</code>, one line gets you years of daily OHLCV data (Open, High, Low, Close, Volume) for any ticker. For NSE stocks, append <code>.NS</code> to the symbol: <code>RELIANCE.NS</code>, <code>TCS.NS</code>, <code>HDFCBANK.NS</code>.</p>
+    <p>Data quality matters: <code>auto_adjust=True</code> adjusts for splits and dividends automatically — always use this. Missing data and corporate actions (splits, mergers) are the most common source of silent bugs in backtests.</p>
+    <div class="code-block">
+      <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> Basic data fetch — click to expand ▾</div>
+      <div class="code-body">
+<pre><span class="kw">import</span> yfinance <span class="kw">as</span> yf
+
+<span class="cm"># Single stock</span>
+df = yf.download(<span class="str">'RELIANCE.NS'</span>, start=<span class="str">'2019-01-01'</span>, end=<span class="str">'2024-12-31'</span>, auto_adjust=<span class="kw">True</span>)
+
+<span class="cm"># Multiple stocks at once</span>
+tickers = [<span class="str">'RELIANCE.NS'</span>, <span class="str">'TCS.NS'</span>, <span class="str">'HDFCBANK.NS'</span>, <span class="str">'INFY.NS'</span>]
+data = yf.download(tickers, start=<span class="str">'2019-01-01'</span>, auto_adjust=<span class="kw">True</span>)
+
+<span class="cm"># data['Close']['RELIANCE.NS'] → Reliance closing prices
+# data['Volume']['TCS.NS']     → TCS volume</span></pre>
+      </div>
+    </div>
+  </div>
+  <div id="flow-detail-2" class="flow-detail">
+    <h4>Stage 3 — Build the Strategy</h4>
+    <p>Turn your hypothesis into <strong>precise, unambiguous rules</strong>. "It looks bullish" is not a rule. "The 10-day SMA crosses above the 50-day SMA AND today's volume is &gt; 1.2× the 20-day average volume" is a rule.</p>
+    <p>Every strategy needs: an <strong>entry condition</strong> (when to buy), an <strong>exit condition</strong> (when to sell), and a <strong>position size rule</strong> (how much to buy). Missing any one of these is not a complete strategy.</p>
+  </div>
+  <div id="flow-detail-3" class="flow-detail">
+    <h4>Stage 4 — Backtest</h4>
+    <p>Run your rules on historical data and simulate what would have happened. The critical discipline: <strong>never look at the OOS (out-of-sample) data while building</strong>. Hold back 20–30% of your data as a clean validation set.</p>
+    <p>Vectorised backtesting (what we do with pandas) simulates all trades at once using array operations — fast, simple. Event-driven backtesting (backtesting.py, zipline) simulates day-by-day like a real system — more realistic, captures things like partial fills.</p>
+  </div>
+  <div id="flow-detail-4" class="flow-detail">
+    <h4>Stage 5 — Analyse the Output</h4>
+    <p>Most beginners either trust a good-looking return number blindly, or drown in metrics they don't understand. Section 09 of this guide decodes every number.</p>
+    <p>The key questions: Did it beat buy-and-hold? Is the Sharpe Ratio &gt; 1? Is the max drawdown something you could psychologically survive? Are there enough trades to be statistically meaningful (&gt;30)?</p>
+  </div>
+  <div id="flow-detail-5" class="flow-detail">
+    <h4>Stage 6 — Deploy or Iterate</h4>
+    <p><strong>Paper trading first</strong> — most brokers offer paper trading (Zerodha Sensibull, Interactive Brokers paper, etc.). Run the strategy for at least 1–3 months on paper before risking real money. Real markets have slippage, partial fills, and data feed delays that backtests miss.</p>
+    <p>Usually you find problems and go back to Stage 1. This is normal. Even professional quants iterate dozens of times. The loop is the process.</p>
+    <div class="callout callout-warn"><strong>Roadmap after paper trading:</strong> For live execution with Python, look into Zerodha Kite Connect API (NSE) or Alpaca (US markets) — both have free tiers and Python SDKs.</div>
+  </div>
+</section>
+
+
+<!-- SECTION 2: FIRST STRATEGY -->
+<section id="first-code">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Your First Strategy — SMA Crossover</h2>
+  </div>
+
+  <p>The SMA crossover is the "Hello World" of algo trading. Simple enough to understand completely, complex enough to teach you all the core concepts. The idea: when the short moving average crosses above the long one, a new uptrend may be starting.</p>
+
+  <h3>The complete strategy, every line explained</h3>
+  <div class="code-block">
+    <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> Complete SMA crossover strategy — click to expand ▾</div>
+    <div class="code-body">
+<pre><span class="kw">import</span> yfinance <span class="kw">as</span> yf
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── STEP 1: GET DATA ───────────────────────────────────
+# .NS suffix = NSE (National Stock Exchange India)
+# auto_adjust=True → splits and dividends handled automatically</span>
+ticker     = <span class="str">'RELIANCE.NS'</span>
+start_date = <span class="str">'2020-01-01'</span>
+end_date   = <span class="str">'2024-12-31'</span>
+
+data = yf.download(ticker, start=start_date, end=end_date, auto_adjust=<span class="kw">True</span>)
+data = data[[<span class="str">'Close'</span>]].copy()
+<span class="cm"># data['Close'] is now a series of daily closing prices</span>
+
+<span class="cm"># ── STEP 2: COMPUTE MOVING AVERAGES ───────────────────
+# SMA(10) = average of last 10 days → reacts fast to price changes
+# SMA(50) = average of last 50 days → shows the bigger, slower trend
+# When fast > slow: uptrend. When fast < slow: downtrend.</span>
+short_window = <span class="num">10</span>
+long_window  = <span class="num">50</span>
+
+data[<span class="str">'SMA_short'</span>] = data[<span class="str">'Close'</span>].rolling(window=short_window).mean()
+data[<span class="str">'SMA_long'</span>]  = data[<span class="str">'Close'</span>].rolling(window=long_window).mean()
+
+<span class="cm"># ── STEP 3: GENERATE SIGNALS ──────────────────────────
+# Signal = 1 when we SHOULD be in the market, 0 when we shouldn't
+# Short MA above long MA = bullish = hold the stock</span>
+data[<span class="str">'Signal'</span>] = <span class="num">0</span>
+data.loc[data[<span class="str">'SMA_short'</span>] &gt; data[<span class="str">'SMA_long'</span>], <span class="str">'Signal'</span>] = <span class="num">1</span>
+
+<span class="cm"># Position = CHANGE in signal
+# +1 = just crossed up → BUY today
+# -1 = just crossed down → SELL today
+#  0 = no change, hold current position</span>
+data[<span class="str">'Position'</span>] = data[<span class="str">'Signal'</span>].diff()
+
+<span class="cm"># ── STEP 4: CALCULATE RETURNS ─────────────────────────
+# Daily return = today's % price change
+# Strategy return = daily return ONLY on days we're in the market
+# .shift(1) is CRITICAL: use yesterday's signal for today's return
+# (In real life, you see the crossover after market close, 
+#  so you can only act the NEXT day's open)</span>
+data[<span class="str">'Daily_Return'</span>]    = data[<span class="str">'Close'</span>].pct_change()
+data[<span class="str">'Strategy_Return'</span>] = data[<span class="str">'Daily_Return'</span>] * data[<span class="str">'Signal'</span>].shift(<span class="num">1</span>)
+
+<span class="cm"># Cumulative returns: how ₹1 grows over time
+# (1 + r1) × (1 + r2) × ... = total growth factor</span>
+data[<span class="str">'Cum_Market'</span>]   = (<span class="num">1</span> + data[<span class="str">'Daily_Return'</span>]).cumprod()
+data[<span class="str">'Cum_Strategy'</span>] = (<span class="num">1</span> + data[<span class="str">'Strategy_Return'</span>]).cumprod()
+
+<span class="cm"># ── STEP 5: COMPUTE METRICS ───────────────────────────</span>
+years = len(data) / <span class="num">252</span>   <span class="cm"># 252 = avg trading days in a year</span>
+
+total_ret  = (data[<span class="str">'Cum_Strategy'</span>].iloc[-<span class="num">1</span>] - <span class="num">1</span>) * <span class="num">100</span>
+cagr       = (data[<span class="str">'Cum_Strategy'</span>].iloc[-<span class="num">1</span>] ** (<span class="num">1</span>/years) - <span class="num">1</span>) * <span class="num">100</span>
+mkt_cagr   = (data[<span class="str">'Cum_Market'</span>].iloc[-<span class="num">1</span>]   ** (<span class="num">1</span>/years) - <span class="num">1</span>) * <span class="num">100</span>
+
+<span class="cm"># Sharpe: annualised excess return / annualised volatility
+# 252**0.5 ≈ 15.87 is the annualisation factor for daily data</span>
+daily_avg    = data[<span class="str">'Strategy_Return'</span>].mean()
+daily_std    = data[<span class="str">'Strategy_Return'</span>].std()
+sharpe       = (daily_avg / daily_std) * (<span class="num">252</span> ** <span class="num">0.5</span>) <span class="kw">if</span> daily_std != <span class="num">0</span> <span class="kw">else</span> <span class="num">0</span>
+
+<span class="cm"># Max drawdown: worst peak-to-trough loss</span>
+rolling_max  = data[<span class="str">'Cum_Strategy'</span>].cummax()
+drawdown     = (data[<span class="str">'Cum_Strategy'</span>] - rolling_max) / rolling_max
+max_dd       = drawdown.min() * <span class="num">100</span>
+
+<span class="cm"># Win rate</span>
+in_market    = data[data[<span class="str">'Signal'</span>].shift(<span class="num">1</span>) == <span class="num">1</span>][<span class="str">'Strategy_Return'</span>]
+win_rate     = (in_market &gt; <span class="num">0</span>).sum() / len(in_market) * <span class="num">100</span>
+gross_profit = in_market[in_market &gt; <span class="num">0</span>].sum()
+gross_loss   = abs(in_market[in_market &lt; <span class="num">0</span>].sum())
+profit_factor = gross_profit / gross_loss <span class="kw">if</span> gross_loss != <span class="num">0</span> <span class="kw">else</span> float(<span class="str">'inf'</span>)
+num_trades   = (data[<span class="str">'Position'</span>] == <span class="num">1</span>).sum()
+
+print(<span class="fn">f</span><span class="str">"CAGR:          {cagr:+.1f}%  (market: {mkt_cagr:+.1f}%)"</span>)
+print(<span class="fn">f</span><span class="str">"Total Return:  {total_ret:+.1f}%"</span>)
+print(<span class="fn">f</span><span class="str">"Sharpe Ratio:  {sharpe:.2f}  (>1 = good)"</span>)
+print(<span class="fn">f</span><span class="str">"Max Drawdown:  {max_dd:.1f}%"</span>)
+print(<span class="fn">f</span><span class="str">"Win Rate:      {win_rate:.1f}%"</span>)
+print(<span class="fn">f</span><span class="str">"Profit Factor: {profit_factor:.2f}"</span>)
+print(<span class="fn">f</span><span class="str">"Num Trades:    {num_trades}"</span>)</pre>
+    </div>
+  </div>
+
+  <h3>How to try variations</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Different tickers</div>
+      <p>Try <code>TCS.NS</code>, <code>INFY.NS</code>, <code>TATASTEEL.NS</code>, <code>NIFTYBEES.NS</code> (Nifty ETF). Each has a different personality — tech stocks trend differently than cyclicals.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Different windows</div>
+      <p>Try <code>5/20</code> (faster, more trades), <code>20/100</code> (slower, fewer trades), <code>50/200</code> (the "Golden Cross" — very well known). Notice how metrics shift.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Add a filter</div>
+      <p>Only enter when <code>Volume > 1.2 × Volume.rolling(20).mean()</code>. This filters low-conviction crossovers. Observe if win rate improves.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Use EMA instead</div>
+      <p>Replace <code>.rolling(n).mean()</code> with <code>.ewm(span=n).mean()</code>. EMA reacts faster — signals come earlier but may be noisier.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 3: READING RESULTS -->
+<section id="reading">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Reading Your Backtest Results</h2>
+  </div>
+
+  <p>When you run that script, you get a block of numbers. Here's exactly how to interpret them — with a good example and a bad example that looks deceptively okay.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+    <div>
+      <div class="result-block">
+        <span class="head-line">✓ Good result</span>
+        <span class="good-line">CAGR:          +18.2%  (market: +12.1%)</span>
+        <span class="good-line">Total Return:  +142%</span>
+        <span class="good-line">Sharpe Ratio:  1.4  ← above 1.0</span>
+        <span class="good-line">Max Drawdown:  -18%  ← survivable</span>
+        <span class="good-line">Win Rate:      54%</span>
+        <span class="good-line">Profit Factor: 1.8  ← gains > losses</span>
+        <span class="good-line">Num Trades:    38  ← statistically ok</span>
+      </div>
+    </div>
+    <div>
+      <div class="result-block">
+        <span class="head-line">✗ Bad result (even if return looks ok)</span>
+        <span class="bad-line">CAGR:          +14%   (market: +12%)</span>
+        <span class="bad-line">Total Return:  +96%</span>
+        <span class="bad-line">Sharpe Ratio:  0.6  ← poor risk/reward</span>
+        <span class="bad-line">Max Drawdown:  -55%  ← could you hold?</span>
+        <span class="bad-line">Win Rate:      62%  ← looks good...</span>
+        <span class="bad-line">Profit Factor: 0.9  ← losses > gains!</span>
+        <span class="bad-line">Num Trades:    4  ← just luck</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>The questions to ask every time</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Question</th><th>What to look for</th><th>Red flag</th></tr>
+      <tr><td><strong>Did it beat buy-and-hold?</strong></td><td>Strategy CAGR &gt; market CAGR by a meaningful margin</td><td>Barely beats market → not worth the complexity</td></tr>
+      <tr><td><strong>Is risk-adjusted return good?</strong></td><td>Sharpe Ratio &gt; 1.0</td><td>Sharpe &lt; 0.7 → returns don't justify risk</td></tr>
+      <tr><td><strong>Could you survive the drawdown?</strong></td><td>Max drawdown &lt; 25%</td><td>&gt;40% drawdown → most people quit before recovery</td></tr>
+      <tr><td><strong>Enough trades to be real?</strong></td><td>&gt;30 trades minimum, &gt;100 preferred</td><td>&lt;10 trades → purely luck, proves nothing</td></tr>
+      <tr><td><strong>Do gains outsize losses?</strong></td><td>Profit Factor &gt; 1.3</td><td>&lt; 1.0 → you're actually losing money overall</td></tr>
+      <tr><td><strong>Does it beat the market after costs?</strong></td><td>Still positive after ~₹40/trade commission + 0.1% slippage</td><td>Strategy evaporates after costs → high-frequency issue</td></tr>
+    </table>
+  </div>
+
+  <h3>Your next steps from here</h3>
+  <div class="callout callout-info">
+    <strong>Learning roadmap:</strong>
+    <p>1. Run the SMA script on 3–4 Nifty stocks — see how results differ by stock type</p>
+    <p>2. Try different window sizes — understand the speed vs noise tradeoff</p>
+    <p>3. Add volume confirmation — see how filters change the result</p>
+    <p>4. Learn RSI and Bollinger Bands (Section 05) — add them as entry filters</p>
+    <p>5. On TradingView free: write the same logic in Pine Script for visual validation — seeing your signals on a chart is invaluable</p>
+    <p>6. When comfortable: install <code>backtesting.py</code> (<code>pip install backtesting</code>) for per-trade analysis with charts</p>
+  </div>
+</section>
+
+
+<!-- SECTION 4: STRATEGIES -->
+<section id="strategies">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Strategy Types — What Edge Are You Exploiting?</h2>
+  </div>
+
+  <p>Every strategy is a bet on a specific <strong>market inefficiency</strong>. Knowing which type you're running determines what data matters, how to judge results, and what failure looks like.</p>
+
+  <div class="stab-row">
+    <div class="stab active" onclick="showStrat('trend',this)">Trend Following</div>
+    <div class="stab" onclick="showStrat('mean',this)">Mean Reversion</div>
+    <div class="stab" onclick="showStrat('momentum',this)">Momentum</div>
+    <div class="stab" onclick="showStrat('breakout',this)">Breakout</div>
+    <div class="stab" onclick="showStrat('arb',this)">Statistical Arb</div>
+    <div class="stab" onclick="showStrat('ml',this)">ML-Based</div>
+  </div>
+
+  <div id="sp-trend" class="strat-panel active">
+    <h4>Trend Following</h4>
+    <p>The oldest and most robust category. Assets that have been rising tend to continue rising — because <strong>institutional fund flows are persistent</strong>. Large funds can't buy ₹10,000 crore in a day, so they accumulate over weeks, creating trends.</p>
+    <div class="meta-row">
+      <span class="badge b-cyan">Weeks to months</span>
+      <span class="badge b-amber">Win rate ~40–55%</span>
+      <span class="badge b-green">High R:R ratio</span>
+    </div>
+    <p><strong>The counterintuitive truth:</strong> Trend strategies lose more often than they win. A 45% win rate can still be very profitable if winning trades are 3× the size of losing trades. Never judge a trend strategy by win rate alone.</p>
+    <p><strong>Signals:</strong> SMA/EMA crossovers, ADX &gt; 25 (confirms trend), Ichimoku cloud position, Donchian channel breakout.</p>
+    <div class="callout callout-warn"><strong>When it fails:</strong> Choppy sideways markets. ADX below 20 means no trend — trend strategies will get whipsawed repeatedly. Use ADX as a regime filter.</div>
+  </div>
+  <div id="sp-mean" class="strat-panel">
+    <h4>Mean Reversion</h4>
+    <p>Bets that prices which have moved too far from their average will snap back. Works because <strong>short-term returns are negatively autocorrelated</strong> — statistically, extreme single-day moves tend to partially reverse.</p>
+    <div class="meta-row">
+      <span class="badge b-cyan">Hours to days</span>
+      <span class="badge b-green">Win rate ~60–70%</span>
+      <span class="badge b-amber">Low R:R ratio</span>
+    </div>
+    <p><strong>The trap:</strong> High win rate feels great until a trending move wipes out 10 wins at once. <em>Always use a strict stop-loss.</em> The classic blowup is "it'll come back" — sometimes it doesn't.</p>
+    <p><strong>Signals:</strong> RSI &lt; 30 / &gt; 70, Bollinger Band lower/upper touch, Z-score of price deviation from MA.</p>
+    <div class="callout callout-danger"><strong>Key rule:</strong> Never run a mean-reversion strategy without a stop-loss. One unhedged trend move can erase weeks of small wins.</div>
+  </div>
+  <div id="sp-momentum" class="strat-panel">
+    <h4>Momentum (Cross-Sectional)</h4>
+    <p>Based on the academically documented fact that <strong>stocks outperforming in the last 3–12 months tend to keep outperforming for the next 1–3 months</strong>. One of the most replicated anomalies in finance literature.</p>
+    <div class="meta-row">
+      <span class="badge b-cyan">Weeks to months</span>
+      <span class="badge b-amber">Win rate ~50–60%</span>
+      <span class="badge b-purple">Cross-sectional ranking</span>
+    </div>
+    <p><strong>Cross-sectional:</strong> Rank a universe of stocks by their 12-1 month return (skip the last month — it tends to reverse). Go long the top decile, short the bottom. Market-neutral.<br><strong>Time-series:</strong> Go long a stock only if its own recent return is positive.</p>
+    <div class="callout callout-warn"><strong>Momentum crash risk:</strong> Momentum strategies can crash violently during sharp reversals (March 2020 lost ~30% in days). Size appropriately.</div>
+  </div>
+  <div id="sp-breakout" class="strat-panel">
+    <h4>Breakout</h4>
+    <p>Enters when price breaks through a resistance or support level. Theory: when a level is broken, trapped traders on the wrong side accelerate the move by covering positions.</p>
+    <div class="meta-row">
+      <span class="badge b-cyan">Days to weeks</span>
+      <span class="badge b-amber">Win rate ~35–45%</span>
+      <span class="badge b-purple">Very high R:R potential</span>
+    </div>
+    <p><strong>Signals:</strong> Donchian channel breakout (N-day high), volume confirmation (&gt;150% of 20-day avg — critical), ATR-based price targets.</p>
+    <div class="callout callout-warn"><strong>False breakout problem:</strong> 60–70% of breakouts fail without volume confirmation. Always wait for a daily close above the level, not just an intraday pierce. Volume is not optional.</div>
+  </div>
+  <div id="sp-arb" class="strat-panel">
+    <h4>Statistical Arbitrage (Pairs Trading)</h4>
+    <p>Exploits mispricings between statistically related instruments. If HDFCBANK and ICICIBANK historically move together (cointegrated), when they diverge, short the outperformer and long the underperformer — betting on convergence.</p>
+    <div class="meta-row">
+      <span class="badge b-green">Market-neutral</span>
+      <span class="badge b-amber">Requires cointegration test</span>
+      <span class="badge b-cyan">Medium complexity</span>
+    </div>
+    <div class="formula">
+      <span class="label">Z-score of spread — the trading signal</span>
+      Z = (spread − mean(spread)) / std(spread)<br>
+      Enter long spread when Z &lt; −2, exit when Z → 0<br>
+      Enter short spread when Z &gt; +2, exit when Z → 0
+    </div>
+    <p>Test cointegration with <code>statsmodels.tsa.stattools.coint()</code>. If p-value &lt; 0.05, the pair is statistically cointegrated and suitable for pairs trading.</p>
+  </div>
+  <div id="sp-ml" class="strat-panel">
+    <h4>ML-Based Strategies</h4>
+    <p>Uses machine learning to find non-linear patterns in features. <strong>The dirty secret: simpler models generalize better in finance.</strong> XGBoost usually beats LSTM for tabular price data. LSTM sounds more impressive but overfits harder.</p>
+    <div class="meta-row">
+      <span class="badge b-amber">High overfitting risk</span>
+      <span class="badge b-purple">Feature engineering critical</span>
+      <span class="badge b-cyan">Non-linear patterns</span>
+    </div>
+    <p><strong>What works:</strong> ML on <em>classification</em> (will price be higher in 5 days? yes/no) or <em>ranking</em> (which of these 50 stocks will do best?). ML on <em>exact price prediction</em> almost never works — the signal-to-noise ratio in price data is too low.</p>
+    <div class="callout callout-danger"><strong>ML pitfall — lookahead bias:</strong> Only use features available at time T to predict time T+1. Rolling window features must use <code>.shift(1)</code>. A model trained with future data looks perfect and fails completely in live trading.</div>
+  </div>
+</section>
+
+
+<!-- SECTION 5: INDICATORS -->
+<section id="indicators">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Indicators — The Math Behind Them</h2>
+  </div>
+  <p>Indicators are not magic. They are <strong>mathematical transformations of price and volume</strong>. Understanding their formulas tells you exactly what they measure — and exactly where they lie to you.</p>
+
+  <h3>SMA vs EMA — the foundation</h3>
+  <div class="formula">
+    <span class="label">SMA — Simple Moving Average</span>
+    SMA(n) = (P₁ + P₂ + ··· + Pₙ) / n   ← equal weight to all n days<br><br>
+    <span class="label">EMA — Exponential Moving Average</span>
+    EMA(today) = Price(today) × k + EMA(yesterday) × (1 − k)<br>
+    k = 2 / (n + 1)  →  EMA(10): k = 0.1818  →  18.2% weight on today's price<br>
+    vs SMA(10): only 10% weight on today's price
+  </div>
+  <p>EMA reacts faster to recent moves (useful in fast markets, noisier). SMA is smoother (better for trend identification, less whipsawing). For short-term signals, use EMA. For long-term trend detection, SMA is fine.</p>
+
+  <h3>RSI — what it actually measures</h3>
+  <div class="formula">
+    <span class="label">RSI (14-period default)</span>
+    RS  = Average Gain over 14 days / Average Loss over 14 days<br>
+    RSI = 100 − (100 / (1 + RS))<br><br>
+    Extreme moves: RS=9 → RSI=90 (9× more up days). RS=0.11 → RSI=10 (9× more down days)
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>RSI Level</th><th>Traditional Read</th><th>Reality</th></tr>
+      <tr><td class="good">&gt; 70</td><td>Overbought → sell</td><td>In strong uptrends, RSI stays &gt;70 for weeks. Selling purely on this signal in a bull market is expensive.</td></tr>
+      <tr><td class="warn">50–70</td><td>Bullish momentum</td><td>RSI crossing 50 from below is a reliable trend-confirmation signal. Better use than the 70 level.</td></tr>
+      <tr><td class="warn">30–50</td><td>Bearish momentum</td><td>RSI crossing 50 from above signals building selling pressure.</td></tr>
+      <tr><td class="bad">&lt; 30</td><td>Oversold → buy</td><td>In downtrends, RSI stays &lt;30 for days. "Catching falling knives" without a trend filter is dangerous.</td></tr>
+    </table>
+  </div>
+  <div class="callout callout-info"><strong>RSI Divergence (stronger signal):</strong> Price makes a new high but RSI makes a lower high → bearish divergence, often precedes a reversal. Much stronger than the 70/30 levels alone because it shows momentum fading before the price reacts.</div>
+
+  <h3>Bollinger Bands — volatility encoded</h3>
+  <div class="formula">
+    <span class="label">Bollinger Bands (20-period, 2σ)</span>
+    Middle Band = SMA(20)<br>
+    Upper Band  = SMA(20) + 2 × StdDev(Close, 20)<br>
+    Lower Band  = SMA(20) − 2 × StdDev(Close, 20)<br><br>
+    %B = (Close − Lower) / (Upper − Lower)  → 0 = at lower, 1 = at upper, 0.5 = at middle<br>
+    BB Width = (Upper − Lower) / Middle  → measures current volatility relative to average
+  </div>
+  <p>The bands encode <strong>volatility</strong> — they expand in high-vol periods and contract in low-vol periods. Tight bands (low BB Width) = volatility compression = potential breakout loading. Wide bands = high volatility = mean reversion more likely.</p>
+
+  <h3>MACD — three signals in one</h3>
+  <div class="formula">
+    <span class="label">MACD (12/26/9 — the universal defaults)</span>
+    MACD Line   = EMA(12) − EMA(26)       ← faster MA minus slower MA<br>
+    Signal Line = EMA(9) of MACD Line     ← smoothed version of MACD<br>
+    Histogram   = MACD Line − Signal Line ← momentum of momentum
+  </div>
+  <p>The histogram is the most useful part. <strong>Growing histogram = momentum building.</strong> Shrinking histogram = momentum fading — often precedes a crossover signal by a few bars, giving earlier warning than the raw crossover.</p>
+
+  <h3>ATR — for stops and sizing</h3>
+  <div class="formula">
+    <span class="label">ATR (Average True Range, 14-period)</span>
+    True Range  = max(High−Low,  |High−Prev Close|,  |Low−Prev Close|)<br>
+    ATR(14)     = Wilder smooth of 14-period True Range averages<br><br>
+    If ATR = ₹50: the stock moves ~₹50 on an average day (normal noise)
+  </div>
+  <p>ATR is critical for stop-loss placement. A stop-loss at ₹20 on a stock with ATR=₹50 guarantees you get stopped out by random daily noise. <strong>Rule: stops at 1.5×–2× ATR from entry.</strong></p>
+
+  <h3>ADX — is there a trend at all?</h3>
+  <div class="formula">
+    <span class="label">ADX interpretation (threshold-based)</span>
+    ADX &lt; 20:    No meaningful trend → ranging market, avoid trend strategies<br>
+    ADX 20–25:   Trend developing → caution<br>
+    ADX 25–40:   Strong trend → ideal for trend-following entry<br>
+    ADX &gt; 40:    Very strong trend → consider partial profit-taking
+  </div>
+  <div class="callout callout-info"><strong>ADX as a regime filter:</strong> The most powerful use of ADX is not as a signal generator — it's as a <em>regime switch</em>. Only run trend strategies when ADX &gt; 25. Switch to mean-reversion when ADX &lt; 20. This one change can dramatically improve both strategy types.</div>
+</section>
+
+
+<!-- SECTION 6: SIGNAL ENGINEERING -->
+<section id="signals">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Signal Engineering</h2>
+  </div>
+  <p>A raw indicator reading is not a signal. A <strong>signal is a precise, testable rule with a binary output: enter or exit</strong>. The engineering between "RSI is low" and a real trading signal is where most of the actual edge comes from.</p>
+
+  <h3>Signal quality hierarchy</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Level 1 — Raw threshold</div>
+      <p>RSI &lt; 30 → buy. Maximum false signals. Works occasionally by coincidence, not by design.</p>
+      <span class="badge b-amber" style="margin-top:8px; display:inline-block;">High noise</span>
+    </div>
+    <div class="card">
+      <div class="card-title">Level 2 — Confirmation</div>
+      <p>RSI &lt; 30 <strong>AND</strong> price &gt; SMA(200). Filters out bear market trades. Better, but still incomplete.</p>
+      <span class="badge b-cyan" style="margin-top:8px; display:inline-block;">Better</span>
+    </div>
+    <div class="card">
+      <div class="card-title">Level 3 — Regime filter</div>
+      <p>RSI &lt; 30 AND SMA(50)&gt;SMA(200) AND ADX&gt;20. Only trades in the right market environment.</p>
+      <span class="badge b-green" style="margin-top:8px; display:inline-block;">Much stronger</span>
+    </div>
+    <div class="card">
+      <div class="card-title">Level 4 — Multi-timeframe</div>
+      <p>Daily trend up → zoom into 4H → RSI oversold there → enter. Higher TF sets direction, lower TF gives timing.</p>
+      <span class="badge b-green" style="margin-top:8px; display:inline-block;">Professional grade</span>
+    </div>
+  </div>
+
+  <h3>Regime-aware signal logic</h3>
+  <div class="code-block">
+    <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> Regime detection + strategy switching — click to expand ▾</div>
+    <div class="code-body">
+<pre><span class="cm"># Compute regime indicators first</span>
+data[<span class="str">'SMA200'</span>]   = data[<span class="str">'Close'</span>].rolling(<span class="num">200</span>).mean()
+data[<span class="str">'BB_width'</span>]  = (data[<span class="str">'BB_upper'</span>] - data[<span class="str">'BB_lower'</span>]) / data[<span class="str">'SMA20'</span>]
+<span class="cm"># (assumes you've computed ADX, BB_upper, BB_lower, SMA20 already)</span>
+
+<span class="kw">def</span> <span class="fn">get_regime</span>(row):
+    <span class="kw">if</span> row[<span class="str">'ADX_14'</span>] &gt; <span class="num">25</span> <span class="kw">and</span> row[<span class="str">'Close'</span>] &gt; row[<span class="str">'SMA200'</span>]:
+        <span class="kw">return</span> <span class="str">'trending_up'</span>
+    <span class="kw">elif</span> row[<span class="str">'ADX_14'</span>] &gt; <span class="num">25</span> <span class="kw">and</span> row[<span class="str">'Close'</span>] &lt; row[<span class="str">'SMA200'</span>]:
+        <span class="kw">return</span> <span class="str">'trending_down'</span>   <span class="cm"># stay flat or short</span>
+    <span class="kw">elif</span> row[<span class="str">'BB_width'</span>] &lt; <span class="num">0.05</span>:
+        <span class="kw">return</span> <span class="str">'squeeze'</span>           <span class="cm"># breakout strategy</span>
+    <span class="kw">else</span>:
+        <span class="kw">return</span> <span class="str">'ranging'</span>           <span class="cm"># mean reversion strategy</span>
+
+data[<span class="str">'regime'</span>] = data.apply(get_regime, axis=<span class="num">1</span>)
+
+<span class="cm"># Apply different logic per regime</span>
+data[<span class="str">'signal'</span>] = <span class="num">0</span>
+data.loc[(data[<span class="str">'regime'</span>] == <span class="str">'trending_up'</span>)  &amp; trend_condition,    <span class="str">'signal'</span>] = <span class="num">1</span>
+data.loc[(data[<span class="str">'regime'</span>] == <span class="str">'ranging'</span>)       &amp; mean_rev_condition, <span class="str">'signal'</span>] = <span class="num">1</span></pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 7: BACKTESTING -->
+<section id="backtesting">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Backtesting — The Right Way</h2>
+  </div>
+  <p>Backtesting is the most <strong>abused tool in retail trading</strong>. Done naively, it tells you nothing useful. The difference between a useful backtest and a lie is methodology.</p>
+
+  <h3>The three-way data split</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">In-Sample (IS) ~60%</div>
+      <p>Design and tune parameters here. You're allowed to look at this data. e.g. 2015–2020.</p>
+      <span class="badge b-cyan" style="display:inline-block;margin-top:8px;">Design zone</span>
+    </div>
+    <div class="card">
+      <div class="card-title">Out-of-Sample (OOS) ~20%</div>
+      <p><strong>Never touch during design.</strong> Run the strategy here once to validate. e.g. 2021–2022.</p>
+      <span class="badge b-green" style="display:inline-block;margin-top:8px;">Validation</span>
+    </div>
+    <div class="card">
+      <div class="card-title">Live / Paper ~20%</div>
+      <p>The only truly clean test is real future data. Paper trade first.</p>
+      <span class="badge b-amber" style="display:inline-block;margin-top:8px;">Final test</span>
+    </div>
+  </div>
+
+  <h3>Realistic cost modelling</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Cost</th><th>What it is</th><th>Estimate</th><th>How to model</th></tr>
+      <tr><td><strong>Commission</strong></td><td>Broker fee</td><td>₹20–40/trade (Zerodha)</td><td>Subtract per trade</td></tr>
+      <tr><td><strong>Slippage</strong></td><td>Signal price vs fill price</td><td>0.05–0.1% per trade</td><td>Multiply fill price by 1.001</td></tr>
+      <tr><td><strong>Bid-ask spread</strong></td><td>Cost of crossing the spread</td><td>0.02–0.05% (Nifty large-cap)</td><td>Add to slippage estimate</td></tr>
+    </table>
+  </div>
+  <div class="callout callout-warn"><strong>Rule of thumb:</strong> A strategy making 20% before costs often makes 14–16% after realistic costs. If your strategy trades daily, costs alone can consume 5–8% of annual returns.</div>
+
+  <div class="code-block">
+    <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> Walk-forward test framework skeleton — click to expand ▾</div>
+    <div class="code-body">
+<pre><span class="kw">def</span> <span class="fn">walk_forward_test</span>(data, is_months=<span class="num">18</span>, oos_months=<span class="num">6</span>):
+    <span class="str">"""
+    Rolls a window: train on is_months, test on oos_months,
+    advance by oos_months, repeat. Returns stitched OOS results.
+    More rigorous than a single IS/OOS split.
+    """</span>
+    results = []
+    data[<span class="str">'date'</span>] = pd.to_datetime(data.index)
+    window_start = data[<span class="str">'date'</span>].iloc[<span class="num">0</span>]
+
+    <span class="kw">while True</span>:
+        is_end  = window_start + pd.DateOffset(months=is_months)
+        oos_end = is_end       + pd.DateOffset(months=oos_months)
+        <span class="kw">if</span> oos_end &gt; data[<span class="str">'date'</span>].iloc[-<span class="num">1</span>]: <span class="kw">break</span>
+
+        is_data  = data[(data[<span class="str">'date'</span>] &gt;= window_start) &amp; (data[<span class="str">'date'</span>] &lt; is_end)]
+        oos_data = data[(data[<span class="str">'date'</span>] &gt;= is_end)       &amp; (data[<span class="str">'date'</span>] &lt; oos_end)]
+
+        best_params = optimize_strategy(is_data)   <span class="cm"># your param search</span>
+        oos_result  = run_strategy(oos_data, best_params)
+        results.append(oos_result)
+        window_start += pd.DateOffset(months=oos_months)
+
+    <span class="kw">return</span> pd.concat(results)</pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 8: RISK -->
+<section id="risk">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>Risk Management & Position Sizing</h2>
+  </div>
+  <p>Position sizing is the <strong>most underrated concept in retail trading</strong>. You can have a profitable strategy and blow up your account with bad sizing. Conversely, a mediocre strategy with excellent sizing can survive for years.</p>
+
+  <h3>Fixed fractional — the starting point</h3>
+  <div class="formula">
+    <span class="label">Fixed Fractional Position Sizing</span>
+    Risk Amount   = Account Balance × Risk% (e.g. 1%)<br>
+    Position Size = Risk Amount / (Entry Price − Stop Loss Price)<br><br>
+    Example: ₹1,00,000 account, 1% risk, entry ₹500, stop at ₹480 (₹20 risk)<br>
+    Position = ₹1,000 / ₹20 = 50 shares
+  </div>
+
+  <h3>Kelly Criterion — interactive calculator</h3>
+  <div class="calc-box">
+    <div class="slider-row">
+      <div class="slider-group">
+        <label>Win Rate (%)</label>
+        <input type="range" min="30" max="80" value="55" id="wr" oninput="updateKelly()">
+        <div class="slider-val" id="wr-val">55%</div>
+      </div>
+      <div class="slider-group">
+        <label>Avg Win / Avg Loss</label>
+        <input type="range" min="10" max="40" value="20" id="rr" oninput="updateKelly()">
+        <div class="slider-val" id="rr-val">2.0×</div>
+      </div>
+      <div class="slider-group">
+        <label>Account Size (₹ 000s)</label>
+        <input type="range" min="1" max="20" value="5" id="acc" oninput="updateKelly()">
+        <div class="slider-val" id="acc-val">₹50,000</div>
+      </div>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Full Kelly %</div>
+        <div class="metric-value" id="full-kelly">—</div>
+        <div class="metric-note warn">Aggressive — can draw down heavily</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Half Kelly (recommended)</div>
+        <div class="metric-value good" id="half-kelly">—</div>
+        <div class="metric-note good">Practical, real-world standard</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Risk Per Trade (₹)</div>
+        <div class="metric-value info" id="pos-size">—</div>
+        <div class="metric-note">Amount to risk on each trade</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Risk per trade — visual reference</h3>
+  <div id="risk-bars"></div>
+
+  <h3>Stop-loss placement methods</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th>Formula</th><th>Best for</th></tr>
+      <tr><td><strong>ATR-based</strong></td><td>Entry − 1.5 × ATR(14)</td><td>Most strategies — adapts to current volatility regime</td></tr>
+      <tr><td><strong>Structure-based</strong></td><td>Below recent swing low</td><td>Trend and breakout strategies</td></tr>
+      <tr><td><strong>Fixed %</strong></td><td>Entry × (1 − 0.05)</td><td>Simple, but ignores volatility — can be too wide or too tight</td></tr>
+      <tr><td><strong>Chandelier Exit</strong></td><td>Highest High(22) − 3×ATR(22)</td><td>Trailing stop for trend-following — adapts as trade moves in your favour</td></tr>
+    </table>
+  </div>
+</section>
+
+
+<!-- SECTION 9: ANALYTICS -->
+<section id="analytics">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2>Analytics — Every Metric Decoded</h2>
+  </div>
+
+  <h3>Return metrics</h3>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">CAGR</div>
+      <div class="metric-value good">15%+</div>
+      <div class="metric-note good">&gt;15% beats most active funds</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">vs Benchmark</div>
+      <div class="metric-value warn">+5%</div>
+      <div class="metric-note warn">Must beat index after all costs</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Return</div>
+      <div class="metric-value info">+X%</div>
+      <div class="metric-note">Meaningless without CAGR — 100% in 20 years is terrible</div>
+    </div>
+  </div>
+
+  <h3>Risk-adjusted metrics</h3>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Sharpe Ratio</div>
+      <div class="metric-value good">1.5+</div>
+      <div class="metric-note"><span class="good">&gt;2 excellent · </span><span class="warn">1–2 good · </span><span class="bad">&lt;1 poor</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Sortino Ratio</div>
+      <div class="metric-value good">2.0+</div>
+      <div class="metric-note good">Only penalises downside vol — prefer over Sharpe</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Calmar Ratio</div>
+      <div class="metric-value warn">0.5+</div>
+      <div class="metric-note"><span class="good">&gt;1 good · </span><span class="bad">&lt;0.5 poor</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <strong>Sortino vs Sharpe:</strong> Sharpe penalises ALL volatility (up and down). Sortino only penalises downside volatility. A strategy that has big up days and small down days has a better Sortino than Sharpe — which is the correct picture. Prefer Sortino.<br><br>
+    <strong>Calmar Ratio</strong> = CAGR ÷ |Max Drawdown|. A Calmar of 1.0 means your CAGR equals your worst drawdown. e.g. 20% CAGR with −20% max DD = Calmar 1.0. Good strategies targeting 2.0+.
+  </div>
+
+  <h3>Trade-level metrics</h3>
+  <div class="formula">
+    <span class="label">Expectancy — the most important per-trade metric</span>
+    Expectancy = (Win Rate × Avg Win) − (Loss Rate × Avg Loss)<br><br>
+    Example: 45% win rate, avg win ₹2000, avg loss ₹800:<br>
+    = (0.45 × 2000) − (0.55 × 800) = 900 − 440 = <span style="color:var(--green)">+₹460 expected per trade</span>
+  </div>
+
+  <h3>Equity curve — shape analysis</h3>
+  <canvas id="equity-canvas"></canvas>
+  <div style="display:flex;gap:20px;font-size:11px;font-family:'JetBrains Mono','Fira Code',monospace;color:var(--muted);margin-top:6px;flex-wrap:wrap;">
+    <span><span style="color:var(--green)">■</span> Smooth uptrend (good Sharpe, low volatility)</span>
+    <span><span style="color:var(--amber)">■</span> High return, high drawdown (poor Calmar)</span>
+    <span><span style="color:var(--red)">■</span> Overfitted (great on IS, erratic on OOS)</span>
+  </div>
+
+  <h3>Drawdown analysis</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Metric</th><th>Measures</th><th>Thresholds</th></tr>
+      <tr><td><strong>Max Drawdown</strong></td><td>Worst peak-to-trough loss</td><td><span class="good">−15% = comfortable</span> · <span class="warn">−30% = survivable</span> · <span class="bad">−50% = very painful</span></td></tr>
+      <tr><td><strong>Avg Drawdown</strong></td><td>Mean depth of all drawdowns</td><td>Should be &lt;50% of max drawdown</td></tr>
+      <tr><td><strong>Max DD Duration</strong></td><td>Longest time to recover to new high</td><td><span class="good">&lt;3 months</span> · <span class="bad">&gt;12 months is very tough psychologically</span></td></tr>
+      <tr><td><strong>Recovery Factor</strong></td><td>Total return ÷ Max Drawdown</td><td>&gt;3 means total gain is 3× the worst loss</td></tr>
+    </table>
+  </div>
+
+  <div class="callout callout-danger"><strong>The drawdown reality check:</strong> Most people assume they'd hold through a −30% drawdown. In practice, almost no one does. Before live trading, honestly answer: if your ₹1,00,000 account drops to ₹70,000 and stays there for 3 months, will you keep running the strategy? If not, size down until the drawdown number is one you can genuinely tolerate.</div>
+</section>
+
+
+<!-- SECTION 10: TRAPS -->
+<section id="traps">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2>Common Traps — How Backtests Lie</h2>
+  </div>
+
+  <h3>Lookahead bias — the silent killer</h3>
+  <div class="callout callout-danger">
+    <strong>Definition:</strong> Using information in your signal that wouldn't have been available at trade time.<br><br>
+    <strong>Classic example:</strong> Generating a signal using today's closing price, then "buying" at today's close. In reality you only know the close after the market closes.<br><br>
+    <strong>Fix:</strong> Always <code>df['signal'].shift(1)</code> before multiplying by returns. This ensures you act on yesterday's signal with today's return. Check every rolling calculation: does it accidentally include the current bar?
+  </div>
+
+  <h3>Overfitting / curve-fitting</h3>
+  <div class="callout callout-danger">
+    <strong>Definition:</strong> Tuning parameters until the strategy looks perfect on historical data. It memorises history instead of learning a real edge.<br><br>
+    <strong>Signs:</strong> Strategy has 5+ parameters. Returns are suspiciously smooth. Tiny parameter changes dramatically alter results. Sharpe drops &gt;40% on OOS data.<br><br>
+    <strong>Fix:</strong> Keep strategies simple (2–3 parameters). If OOS Sharpe is &lt;60% of IS Sharpe, the strategy is overfit.
+  </div>
+
+  <h3>Survivorship bias</h3>
+  <div class="callout callout-warn">
+    <strong>Definition:</strong> Testing on current Nifty 50 constituents ignores stocks that were delisted, merged, or went bankrupt. Your universe is biased toward survivors.<br><br>
+    <strong>Impact:</strong> Returns may be overstated by 1–3% CAGR. Hard to avoid with free data. Just be aware and discount your returns slightly.
+  </div>
+
+  <h3>Other traps</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Trap</th><th>What happens</th><th>Fix</th></tr>
+      <tr><td><strong>Too few trades</strong></td><td>5 trades with good results = luck, not signal</td><td>Minimum 30 trades; 100+ preferred for statistical confidence</td></tr>
+      <tr><td><strong>Ignoring costs</strong></td><td>Daily-signal strategies look great; costs eat the returns</td><td>Model commission + slippage explicitly before declaring success</td></tr>
+      <tr><td><strong>Data snooping</strong></td><td>Testing 100 variations — statistically some look great by pure chance</td><td>Fewer variations, stricter IS/OOS separation</td></tr>
+      <tr><td><strong>Regime mismatch</strong></td><td>Strategy trained in 2012–2019 bull market fails in 2022 bear</td><td>Include at least one bear market period in IS data</td></tr>
+      <tr><td><strong>Ignoring liquidity</strong></td><td>Backtesting on thinly traded small-caps where you couldn't fill the order</td><td>Filter: avg 20-day volume &gt; ₹5Cr before including a stock</td></tr>
+    </table>
+  </div>
+</section>
+
+
+<!-- SECTION 11: TOOLKIT -->
+<section id="toolkit">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <h2>Python Toolkit — Copy & Use</h2>
+  </div>
+
+  <h3>Full indicator library</h3>
+  <div class="code-block">
+    <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> compute_indicators(df) — ATR, RSI, MACD, BB, ADX — click to expand ▾</div>
+    <div class="code-body">
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> <span class="fn">compute_indicators</span>(df):
+    h = df[<span class="str">'High'</span>]; l = df[<span class="str">'Low'</span>]; c = df[<span class="str">'Close'</span>]
+
+    <span class="cm"># Moving Averages</span>
+    <span class="kw">for</span> n <span class="kw">in</span> [<span class="num">10</span>, <span class="num">20</span>, <span class="num">50</span>, <span class="num">200</span>]:
+        df[<span class="fn">f</span><span class="str">'SMA_{n}'</span>] = c.rolling(n).mean()
+        df[<span class="fn">f</span><span class="str">'EMA_{n}'</span>] = c.ewm(span=n, adjust=<span class="kw">False</span>).mean()
+
+    <span class="cm"># ATR</span>
+    prev_c = c.shift(<span class="num">1</span>)
+    tr     = pd.concat([h-l, (h-prev_c).abs(), (l-prev_c).abs()], axis=<span class="num">1</span>).max(axis=<span class="num">1</span>)
+    df[<span class="str">'ATR_14'</span>] = tr.ewm(alpha=<span class="num">1</span>/<span class="num">14</span>, adjust=<span class="kw">False</span>).mean()
+
+    <span class="cm"># RSI (Wilder smoothing via ewm)</span>
+    delta = c.diff()
+    gain  = delta.clip(lower=<span class="num">0</span>).ewm(alpha=<span class="num">1</span>/<span class="num">14</span>, adjust=<span class="kw">False</span>).mean()
+    loss  = (-delta.clip(upper=<span class="num">0</span>)).ewm(alpha=<span class="num">1</span>/<span class="num">14</span>, adjust=<span class="kw">False</span>).mean()
+    df[<span class="str">'RSI_14'</span>] = <span class="num">100</span> - (<span class="num">100</span> / (<span class="num">1</span> + gain / loss))
+
+    <span class="cm"># MACD</span>
+    ema12 = c.ewm(span=<span class="num">12</span>, adjust=<span class="kw">False</span>).mean()
+    ema26 = c.ewm(span=<span class="num">26</span>, adjust=<span class="kw">False</span>).mean()
+    df[<span class="str">'MACD'</span>]        = ema12 - ema26
+    df[<span class="str">'MACD_signal'</span>] = df[<span class="str">'MACD'</span>].ewm(span=<span class="num">9</span>, adjust=<span class="kw">False</span>).mean()
+    df[<span class="str">'MACD_hist'</span>]   = df[<span class="str">'MACD'</span>] - df[<span class="str">'MACD_signal'</span>]
+
+    <span class="cm"># Bollinger Bands</span>
+    sma20 = c.rolling(<span class="num">20</span>).mean(); std20 = c.rolling(<span class="num">20</span>).std()
+    df[<span class="str">'BB_upper'</span>]  = sma20 + <span class="num">2</span>*std20
+    df[<span class="str">'BB_middle'</span>] = sma20
+    df[<span class="str">'BB_lower'</span>]  = sma20 - <span class="num">2</span>*std20
+    df[<span class="str">'BB_pct_b'</span>]  = (c - df[<span class="str">'BB_lower'</span>]) / (df[<span class="str">'BB_upper'</span>] - df[<span class="str">'BB_lower'</span>])
+    df[<span class="str">'BB_width'</span>]  = (df[<span class="str">'BB_upper'</span>] - df[<span class="str">'BB_lower'</span>]) / sma20
+
+    <span class="cm"># ADX</span>
+    up   = h - h.shift(<span class="num">1</span>); down = l.shift(<span class="num">1</span>) - l
+    pdm  = up.where((up&gt;down)&amp;(up&gt;<span class="num">0</span>), <span class="num">0</span>)
+    ndm  = down.where((down&gt;up)&amp;(down&gt;<span class="num">0</span>), <span class="num">0</span>)
+    pdi  = <span class="num">100</span> * pdm.ewm(alpha=<span class="num">1</span>/<span class="num">14</span>, adjust=<span class="kw">False</span>).mean() / df[<span class="str">'ATR_14'</span>]
+    ndi  = <span class="num">100</span> * ndm.ewm(alpha=<span class="num">1</span>/<span class="num">14</span>, adjust=<span class="kw">False</span>).mean() / df[<span class="str">'ATR_14'</span>]
+    dx   = <span class="num">100</span> * (pdi-ndi).abs() / (pdi+ndi)
+    df[<span class="str">'ADX_14'</span>] = dx.ewm(alpha=<span class="num">1</span>/<span class="num">14</span>, adjust=<span class="kw">False</span>).mean()
+
+    <span class="kw">return</span> df</pre>
+    </div>
+  </div>
+
+  <h3>Full metrics calculator</h3>
+  <div class="code-block">
+    <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> backtest_metrics(returns) — Sharpe, Sortino, Calmar, drawdown — click to expand ▾</div>
+    <div class="code-body">
+<pre><span class="kw">def</span> <span class="fn">backtest_metrics</span>(returns: pd.Series, risk_free: float = <span class="num">0.07</span>) -> dict:
+    r        = returns.dropna()
+    cum      = (<span class="num">1</span> + r).cumprod()
+    n_years  = len(r) / <span class="num">252</span>
+    daily_rf = risk_free / <span class="num">252</span>
+
+    total_return = cum.iloc[-<span class="num">1</span>] - <span class="num">1</span>
+    cagr         = cum.iloc[-<span class="num">1</span>] ** (<span class="num">1</span>/n_years) - <span class="num">1</span>
+    vol_ann      = r.std() * np.sqrt(<span class="num">252</span>)
+
+    <span class="cm"># Downside deviation (for Sortino)</span>
+    downside = r[r &lt; daily_rf]
+    sortino_vol = downside.std() * np.sqrt(<span class="num">252</span>) <span class="kw">if</span> len(downside) &gt; <span class="num">0</span> <span class="kw">else</span> <span class="num">1e-9</span>
+
+    <span class="cm"># Drawdown</span>
+    rolling_max = cum.cummax()
+    drawdown    = (cum - rolling_max) / rolling_max
+    max_dd      = drawdown.min()
+    dd_dur      = (drawdown &lt; <span class="num">0</span>).groupby((drawdown &lt; <span class="num">0</span> != (drawdown &lt; <span class="num">0</span>).shift()).cumsum()).sum().max()
+
+    excess = cagr - risk_free
+    sharpe  = excess / vol_ann      <span class="kw">if</span> vol_ann != <span class="num">0</span>     <span class="kw">else</span> <span class="num">0</span>
+    sortino = excess / sortino_vol  <span class="kw">if</span> sortino_vol != <span class="num">0</span> <span class="kw">else</span> <span class="num">0</span>
+    calmar  = cagr / abs(max_dd)    <span class="kw">if</span> max_dd != <span class="num">0</span>       <span class="kw">else</span> <span class="num">0</span>
+
+    in_mkt       = r[r != <span class="num">0</span>]
+    win_rate     = (in_mkt &gt; <span class="num">0</span>).mean()
+    gross_profit = in_mkt[in_mkt &gt; <span class="num">0</span>].sum()
+    gross_loss   = abs(in_mkt[in_mkt &lt; <span class="num">0</span>].sum())
+    pf           = gross_profit / gross_loss <span class="kw">if</span> gross_loss != <span class="num">0</span> <span class="kw">else</span> np.inf
+    expectancy   = win_rate * in_mkt[in_mkt&gt;<span class="num">0</span>].mean() + (<span class="num">1</span>-win_rate) * in_mkt[in_mkt&lt;<span class="num">0</span>].mean()
+
+    <span class="kw">return</span> {
+        <span class="str">'total_return_pct'</span>: <span class="fn">round</span>(total_return*<span class="num">100</span>,<span class="num">2</span>), <span class="str">'cagr_pct'</span>: <span class="fn">round</span>(cagr*<span class="num">100</span>,<span class="num">2</span>),
+        <span class="str">'sharpe'</span>: <span class="fn">round</span>(sharpe,<span class="num">3</span>),   <span class="str">'sortino'</span>: <span class="fn">round</span>(sortino,<span class="num">3</span>), <span class="str">'calmar'</span>: <span class="fn">round</span>(calmar,<span class="num">3</span>),
+        <span class="str">'max_dd_pct'</span>: <span class="fn">round</span>(max_dd*<span class="num">100</span>,<span class="num">2</span>), <span class="str">'max_dd_days'</span>: int(dd_dur),
+        <span class="str">'win_rate_pct'</span>: <span class="fn">round</span>(win_rate*<span class="num">100</span>,<span class="num">2</span>), <span class="str">'profit_factor'</span>: <span class="fn">round</span>(pf,<span class="num">3</span>),
+        <span class="str">'expectancy_pct'</span>: <span class="fn">round</span>(expectancy*<span class="num">100</span>,<span class="num">4</span>),
+    }</pre>
+    </div>
+  </div>
+
+  <h3>Pairs trading skeleton</h3>
+  <div class="code-block">
+    <div class="code-header" onclick="toggleCode(this)"><span class="code-lang">python</span> pairs_analysis() — cointegration test + Z-score signals — click to expand ▾</div>
+    <div class="code-body">
+<pre><span class="kw">from</span> statsmodels.tsa.stattools <span class="kw">import</span> coint
+<span class="kw">import</span> statsmodels.api <span class="kw">as</span> sm
+
+<span class="kw">def</span> <span class="fn">pairs_analysis</span>(price_a, price_b, lookback=<span class="num">60</span>):
+    score, pvalue, _ = <span class="fn">coint</span>(price_a, price_b)
+    print(<span class="fn">f</span><span class="str">"Cointegration p-value: {pvalue:.4f}"</span>)
+    <span class="kw">if</span> pvalue &gt; <span class="num">0.05</span>:
+        print(<span class="str">"⚠ Not cointegrated — do not trade this pair"</span>); <span class="kw">return None</span>
+
+    result      = sm.OLS(price_a, sm.add_constant(price_b)).fit()
+    hedge_ratio = result.params[price_b.name]
+    spread      = price_a - hedge_ratio * price_b
+
+    mu     = spread.rolling(lookback).mean()
+    sd     = spread.rolling(lookback).std()
+    zscore = (spread - mu) / sd
+
+    signal = pd.Series(<span class="num">0</span>, index=zscore.index)
+    signal[zscore &lt; -<span class="num">2.0</span>] =  <span class="num">1</span>   <span class="cm"># long spread</span>
+    signal[zscore &gt;  <span class="num">2.0</span>] = -<span class="num">1</span>   <span class="cm"># short spread</span>
+    signal[(zscore &gt; -<span class="num">0.5</span>) &amp; (zscore &lt; <span class="num">0.5</span>)] = <span class="num">0</span>  <span class="cm"># exit zone</span>
+    signal = signal.ffill()
+
+    <span class="kw">return</span> {<span class="str">'spread'</span>: spread, <span class="str">'zscore'</span>: zscore, <span class="str">'signal'</span>: signal, <span class="str">'hedge_ratio'</span>: hedge_ratio}
+
+<span class="cm"># Try: HDFCBANK.NS vs ICICIBANK.NS — both large private banks, historically correlated</span></pre>
+    </div>
+  </div>
+
+  <h3>Useful libraries</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Library</th><th>Install</th><th>Use for</th></tr>
+      <tr><td><strong>backtesting.py</strong></td><td><code>pip install backtesting</code></td><td>Clean event-driven backtesting with built-in charts and OOP strategy structure</td></tr>
+      <tr><td><strong>vectorbt</strong></td><td><code>pip install vectorbt</code></td><td>Extremely fast vectorized backtesting, portfolio-level analysis, parameter optimization grids</td></tr>
+      <tr><td><strong>statsmodels</strong></td><td><code>pip install statsmodels</code></td><td>Cointegration tests, ARIMA models, statistical hypothesis testing</td></tr>
+      <tr><td><strong>pyfolio-reloaded</strong></td><td><code>pip install pyfolio-reloaded</code></td><td>Hedge-fund-style performance tear sheets (rolling Sharpe, drawdown curves)</td></tr>
+      <tr><td><strong>plotly</strong></td><td><code>pip install plotly</code></td><td>Interactive equity curves, drawdown charts, indicator overlays</td></tr>
+    </table>
+  </div>
+
+  <!-- Roadmap -->
+  <div style="margin-top: 40px; padding: 22px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px;">
+    <div style="font-family:'JetBrains Mono','Fira Code',monospace; font-size:10px; color:var(--cyan); margin-bottom:12px; letter-spacing:0.1em; text-transform:uppercase;">Learning Roadmap</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:13px; color:var(--muted);">
+      <div>✦ <strong style="color:var(--text)">Now:</strong> SMA/EMA crossover on 3+ NSE stocks</div>
+      <div>✦ <strong style="color:var(--text)">Next:</strong> Add RSI + volume filters to improve signal quality</div>
+      <div>✦ <strong style="color:var(--text)">Then:</strong> IS/OOS split, measure OOS performance honestly</div>
+      <div>✦ <strong style="color:var(--text)">Then:</strong> Add ATR-based stops and fixed fractional sizing</div>
+      <div>✦ <strong style="color:var(--text)">Later:</strong> Regime filter (ADX), multiple strategy types</div>
+      <div>✦ <strong style="color:var(--text)">Later:</strong> Walk-forward optimization, pairs trading</div>
+    </div>
+  </div>
+
+</section>
+
+<div class="footer-aryan">
+<h3>Built with Python, Quant Research &amp; Too Much Coffee ☕</h3>
+<p><strong>Made by Aryan Jayanth</strong></p>
+<p>The Ultimate Algo Trading Handbook • Version 3.0 • 2026</p>
+<p>Designed for GitHub, Reddit and aspiring quant developers.</p>
+</div>
+
+</main>
+
+<script>
+// ── THEME
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.dataset.theme === 'dark';
+  html.dataset.theme = isDark ? 'light' : 'dark';
+  document.getElementById('theme-label').textContent = isDark ? 'DARK MODE' : 'LIGHT MODE';
+  drawEquityCurves();
+}
+
+// ── SIDEBAR ACTIVE
+function setActive(el) {
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+window.addEventListener('scroll', () => {
+  let current = '';
+  document.querySelectorAll('section[id]').forEach(s => {
+    if (window.scrollY >= s.offsetTop - 90) current = s.id;
+  });
+  document.querySelectorAll('nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+
+// ── CODE TOGGLE
+function toggleCode(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  const span = header.querySelector('span:last-child');
+  if (span) span.textContent = span.textContent.replace(body.classList.contains('open') ? '▾' : '▴', body.classList.contains('open') ? '▴' : '▾');
+}
+
+// ── FLOW STEPS
+function showFlow(idx, el) {
+  document.querySelectorAll('.flow-step').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.flow-detail').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+  const det = document.getElementById('flow-detail-' + idx);
+  if (det) det.classList.add('active');
+}
+
+// ── STRATEGY TABS
+function showStrat(id, el) {
+  document.querySelectorAll('.strat-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('sp-' + id);
+  if (panel) panel.classList.add('active');
+  el.classList.add('active');
+}
+
+// ── KELLY CALC
+function updateKelly() {
+  const W   = parseFloat(document.getElementById('wr').value) / 100;
+  const b   = parseFloat(document.getElementById('rr').value) / 10;
+  const acc = parseFloat(document.getElementById('acc').value) * 10000;
+  document.getElementById('wr-val').textContent  = Math.round(W*100) + '%';
+  document.getElementById('rr-val').textContent  = b.toFixed(1) + '×';
+  document.getElementById('acc-val').textContent = '₹' + Math.round(acc/1000) + ',000';
+  const kelly = Math.max(0, (W * b - (1 - W)) / b);
+  const fullK = kelly * 100;
+  const halfK = fullK / 2;
+  document.getElementById('full-kelly').textContent = fullK.toFixed(1) + '%';
+  document.getElementById('half-kelly').textContent = halfK.toFixed(1) + '%';
+  document.getElementById('pos-size').textContent   = '₹' + Math.round(acc * halfK / 100);
+  document.getElementById('full-kelly').className = 'metric-value ' + (fullK > 30 ? 'bad' : fullK > 15 ? 'warn' : 'good');
+}
+updateKelly();
+
+// ── RISK BARS
+(function() {
+  const c = document.getElementById('risk-bars');
+  if (!c) return;
+  [
+    { l: '0.5% risk / trade', pct: 5,   col: 'var(--green)', n: 'Very conservative — ideal for first 3 months' },
+    { l: '1% risk / trade',   pct: 10,  col: 'var(--green)', n: 'Recommended for beginners' },
+    { l: '2% risk / trade',   pct: 20,  col: 'var(--cyan)',  n: 'Moderate, common at professional level' },
+    { l: '5% risk / trade',   pct: 50,  col: 'var(--amber)', n: 'Aggressive — requires strong conviction' },
+    { l: '10% risk / trade',  pct: 100, col: 'var(--red)',   n: 'Ruin territory' },
+  ].forEach(s => {
+    c.innerHTML += `<div class="risk-bar"><div class="rb-top"><span style="color:var(--text)">${s.l}</span><span style="color:var(--muted);font-size:11px">${s.n}</span></div><div class="rb-track"><div class="rb-fill" style="width:${s.pct}%;background:${s.col}"></div></div></div>`;
+  });
+})();
+
+// ── EQUITY CURVES
+function drawEquityCurves() {
+  const canvas = document.getElementById('equity-canvas');
+  if (!canvas) return;
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  const W = canvas.offsetWidth || 600, H = 180;
+  canvas.width  = W * window.devicePixelRatio;
+  canvas.height = H * window.devicePixelRatio;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  function makeCurve(n, drift, vol, seed, noisy) {
+    let pts = [1], r = seed;
+    const rand = () => { r=(r*1664525+1013904223)&0xFFFFFFFF; return (r>>>0)/0xFFFFFFFF-0.5; };
+    for (let i=1;i<n;i++) pts.push(pts[pts.length-1]*(1 + drift + vol*rand() + (noisy ? 0.025*Math.sin(i*.35)*rand() : 0)));
+    return pts;
+  }
+  const N = 252, smooth = makeCurve(N,.0007,.007,12345,false), volatile = makeCurve(N,.0009,.02,99999,false), noisy = makeCurve(N,.0006,.006,55555,true);
+  const allV = [...smooth,...volatile,...noisy];
+  const minV = Math.min(...allV), maxV = Math.max(...allV), pad = 14;
+
+  // Grid
+  ctx.strokeStyle = isDark ? 'rgba(30,45,66,0.7)' : 'rgba(180,200,220,0.5)';
+  ctx.lineWidth = 0.5;
+  [.2,.4,.6,.8].forEach(y => { ctx.beginPath(); ctx.moveTo(0,pad+(y*(H-pad*2))); ctx.lineTo(W,pad+(y*(H-pad*2))); ctx.stroke(); });
+
+  const toX = (i, arr) => pad + (i/(arr.length-1))*(W-pad*2);
+  const toY = v => pad + (1-(v-minV)/(maxV-minV))*(H-pad*2);
+
+  function drawCurve(pts, color) {
+    ctx.beginPath();
+    pts.forEach((v,i) => i===0 ? ctx.moveTo(toX(i,pts),toY(v)) : ctx.lineTo(toX(i,pts),toY(v)));
+    ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+  drawCurve(smooth,   isDark ? '#00E676' : '#006e30');
+  drawCurve(volatile, isDark ? '#F5A623' : '#b06000');
+  drawCurve(noisy,    isDark ? '#FF5252' : '#c0122a');
+}
+window.addEventListener('load', drawEquityCurves);
+window.addEventListener('resize', drawEquityCurves);
+</script>
+</body>
+</html>

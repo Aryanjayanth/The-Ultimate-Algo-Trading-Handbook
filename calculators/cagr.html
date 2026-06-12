@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAGR Calculator | The Ultimate Algo Trading Handbook</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  
+  <style>
+    .calculator-container {
+      max-width: 640px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .chart-container {
+      margin-top: 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      height: 200px;
+      position: relative;
+    }
+    
+    .chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .cagr-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../index.html" class="brand-wrapper">
+          <span class="brand-title">Algo Trading Handbook</span>
+          <span class="brand-sub">Aryan Jayanth / Calculators</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <a href="../index.html" class="btn btn-secondary" style="padding: 0.45rem 1rem; font-size: 0.82rem;">Back to Handbook</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Content container -->
+    <div class="calculator-container">
+      <a href="../index.html" class="back-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Handbook</span>
+      </a>
+      
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h2 style="font-size: 2.25rem;">CAGR Calculator</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Calculate the Compound Annual Growth Rate. Measures geometric progression rates of capital scaling.</p>
+      </div>
+      
+      <div class="card">
+        <!-- Input 1 -->
+        <div class="form-group">
+          <label for="initial-input">Initial Capital (₹)</label>
+          <input type="number" class="input-control" id="initial-input" value="100000" min="1000" max="100000000">
+        </div>
+        
+        <!-- Input 2 -->
+        <div class="form-group">
+          <label for="final-input">Ending Value (₹)</label>
+          <input type="number" class="input-control" id="final-input" value="250000" min="1000" max="1000000000">
+        </div>
+        
+        <!-- Input 3 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="period-input">Duration (Years)</label>
+            <span id="period-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">5 Years</span>
+          </div>
+          <input type="range" class="range-slider" id="period-input" min="1" max="25" value="5" step="1">
+        </div>
+        
+        <!-- Output widget -->
+        <div class="metric-card" style="margin-top: 2rem; background: var(--bg-tertiary);">
+          <div class="metric-card-label">Compound Annual Growth Rate</div>
+          <div class="metric-card-value" id="cagr-value">20.11%</div>
+          <div class="cagr-badge" id="cagr-badge">Outstanding Alpha</div>
+          <div class="metric-card-desc" id="cagr-desc" style="margin-top: 0.5rem;">Your growth outpaces index benchmarks, indicating strong alpha generation.</div>
+        </div>
+        
+        <!-- SVG Compounding Chart Component -->
+        <div class="chart-container">
+          <svg class="chart-svg" id="cagr-chart" viewBox="0 0 500 180">
+            <!-- Grid lines -->
+            <line x1="40" y1="15" x2="480" y2="15" stroke="var(--border-primary)" stroke-width="1" stroke-dasharray="4" />
+            <line x1="40" y1="80" x2="480" y2="80" stroke="var(--border-primary)" stroke-width="1" stroke-dasharray="4" />
+            <line x1="40" y1="145" x2="480" y2="145" stroke="var(--border-primary)" stroke-width="1" stroke-dasharray="4" />
+            
+            <!-- Axis labels -->
+            <text x="10" y="20" fill="var(--text-muted)" font-size="8" font-family="monospace">PEAK</text>
+            <text x="10" y="85" fill="var(--text-muted)" font-size="8" font-family="monospace">MID</text>
+            <text x="10" y="150" fill="var(--text-muted)" font-size="8" font-family="monospace">START</text>
+            
+            <!-- Curves will be drawn here dynamically -->
+            <path id="linear-path" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3" />
+            <path id="compound-path" fill="none" stroke="var(--cyan-accent)" stroke-width="2.5" />
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Math Box -->
+      <div class="card" style="margin-top: 1.5rem; background: transparent; padding: 1.25rem 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Formula Reference</span>
+        <code style="font-family: var(--font-mono); font-size: 0.85rem; display: block; padding: 0.5rem; background-color: var(--bg-tertiary);">CAGR = ((Ending Value / Initial Value) ^ (1 / Years)) - 1</code>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../assets/js/core.js"></script>
+  <script>
+    const initialInput = document.getElementById('initial-input');
+    const finalInput = document.getElementById('final-input');
+    const periodInput = document.getElementById('period-input');
+    const periodVal = document.getElementById('period-val');
+    
+    const cagrValue = document.getElementById('cagr-value');
+    const cagrBadge = document.getElementById('cagr-badge');
+    const cagrDesc = document.getElementById('cagr-desc');
+    
+    const linearPath = document.getElementById('linear-path');
+    const compoundPath = document.getElementById('compound-path');
+    
+    function updateCAGR() {
+      const initial = parseFloat(initialInput.value) || 1000;
+      const final = parseFloat(finalInput.value) || 1000;
+      const years = parseFloat(periodInput.value) || 1;
+      
+      periodVal.textContent = years + (years === 1 ? ' Year' : ' Years');
+      
+      if (initial <= 0 || final <= 0) return;
+      
+      const cagr = (Math.pow(final / initial, 1 / years) - 1) * 100;
+      cagrValue.textContent = cagr.toFixed(2) + '%';
+      
+      // Update badge states
+      if (cagr < 5) {
+        cagrBadge.textContent = "Underperforming inflation";
+        cagrBadge.style.color = "var(--red-accent)";
+        cagrDesc.textContent = "Growth rates are below inflation averages. Re-optimize strategy signals.";
+      } else if (cagr < 12) {
+        cagrBadge.textContent = "Benchmark Performance";
+        cagrBadge.style.color = "var(--amber-accent)";
+        cagrDesc.textContent = "Matches historical index benchmark rates. Safe but low alpha.";
+      } else if (cagr < 25) {
+        cagrBadge.textContent = "Outstanding Alpha";
+        cagrBadge.style.color = "var(--cyan-accent)";
+        cagrDesc.textContent = "Your growth outpaces benchmark rates. Excellent model profile.";
+      } else {
+        cagrBadge.textContent = "Hyper-Growth (Extreme)";
+        cagrBadge.style.color = "var(--green-accent)";
+        cagrDesc.textContent = "Very high performance. Monitor models closely for high leverage risk.";
+      }
+      
+      drawChart(initial, final, years);
+    }
+    
+    function drawChart(start, end, years) {
+      const points = 30; // chart resolution
+      const stepX = (480 - 40) / (points - 1);
+      const minVal = Math.min(start, end);
+      const maxVal = Math.max(start, end);
+      
+      const toY = (v) => 145 - ((v - minVal) / (maxVal - minVal || 1)) * 130;
+      
+      let dLinear = "";
+      let dCompound = "";
+      
+      const cagrFrac = Math.pow(end / start, 1 / years);
+      
+      for (let i = 0; i < points; i++) {
+        const x = 40 + i * stepX;
+        const frac = i / (points - 1);
+        
+        // Linear path value
+        const valLin = start + frac * (end - start);
+        dLinear += (i === 0 ? "M " : " L ") + x + " " + toY(valLin);
+        
+        // Compounding path value
+        const currentYear = frac * years;
+        const valComp = start * Math.pow(cagrFrac, currentYear);
+        dCompound += (i === 0 ? "M " : " L ") + x + " " + toY(valComp);
+      }
+      
+      linearPath.setAttribute('d', dLinear);
+      compoundPath.setAttribute('d', dCompound);
+    }
+    
+    initialInput.addEventListener('input', updateCAGR);
+    finalInput.addEventListener('input', updateCAGR);
+    periodInput.addEventListener('input', updateCAGR);
+    
+    // Initial run
+    updateCAGR();
+  </script>
+</body>
+</html>

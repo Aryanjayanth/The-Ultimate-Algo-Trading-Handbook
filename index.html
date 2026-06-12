@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate Algo Trading Handbook | Aryan Jayanth</title>
+  
+  <!-- SEO & Optimization -->
+  <meta name="description" content="The Ultimate Algo Trading Handbook by Aryan Jayanth. A premium, production-grade reference manual for quantitative finance. Learn backtesting, strategy construction, indicators math, and risk management in Python.">
+  <meta name="keywords" content="Algo Trading, Quantitative Trading, Python Trading, Backtesting, Trading Strategies, Finance Math, Sharpe Ratio, Monte Carlo Simulation">
+  <meta name="author" content="Aryan Jayanth">
+  <link rel="canonical" href="https://handbook.algo.quant/index.html">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Ultimate Algo Trading Handbook">
+  <meta property="og:description" content="A premium reference manual for quantitative finance and algorithmic strategy design by Aryan Jayanth.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://handbook.algo.quant/index.html">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Ultimate Algo Trading Handbook">
+  <meta name="twitter:description" content="Learn quantitative finance, backtesting, and automated strategies.">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#030712">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Code Highlighting Theme (Prism Tomorrow) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  
+  <!-- Custom CSS System -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/handbook.css">
+  
+  <style>
+    .hero {
+      position: relative;
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--border-primary);
+      margin-bottom: 3.5rem;
+      z-index: 10;
+    }
+    
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--cyan-accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .hero h1 {
+      font-size: 3.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #ffffff 30%, var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    :root[data-theme="light"] .hero h1 {
+      background: linear-gradient(135deg, #090d16 30%, var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.65;
+    }
+    
+    .app-footer {
+      border-top: 1px solid var(--border-primary);
+      padding: 4rem 2rem;
+      text-align: center;
+      margin-top: 6rem;
+      background-color: var(--bg-secondary);
+    }
+    
+    .footer-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    
+    <!-- HEADER NAVBAR -->
+    <header class="app-header">
+      <div class="header-left">
+        <button class="menu-trigger" id="menu-trigger" aria-label="Toggle Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+        <a href="index.html" class="brand-wrapper">
+          <span class="brand-title">The Ultimate Algo Trading Handbook</span>
+          <span class="brand-sub">Aryan Jayanth / Edition v1.0</span>
+        </a>
+      </div>
+      
+      <div class="header-right">
+        <!-- Search Trigger -->
+        <div class="search-trigger" id="search-trigger">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Search documentation...</span>
+          <span class="search-shortcut">Ctrl K</span>
+        </div>
+        
+        <!-- Navigation Links -->
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+      
+      <!-- Reading Progress Bar -->
+      <div class="reading-progress-container">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+      </div>
+    </header>
+    
+    <div class="layout-wrapper">
+      
+      <!-- SIDEBAR TABLE OF CONTENTS -->
+      <aside class="sidebar" id="sidebar">
+        <div class="nav-group">
+          <div class="nav-group-title">Foundations</div>
+          <a href="#overview" class="nav-link"><span class="nav-link-dot"></span>00 — What is Algo Trading</a>
+          <a href="#workflow" class="nav-link"><span class="nav-link-dot"></span>01 — The 6-Stage Workflow</a>
+          <a href="#first-code" class="nav-link"><span class="nav-link-dot"></span>02 — SMA Crossover Strategy</a>
+          <a href="#reading" class="nav-link"><span class="nav-link-dot"></span>03 — Reading Backtest Metrics</a>
+        </div>
+        
+        <div class="nav-group">
+          <div class="nav-group-title">Strategy Design</div>
+          <a href="#strategies" class="nav-link"><span class="nav-link-dot"></span>04 — Core Strategy Types</a>
+          <a href="#indicators" class="nav-link"><span class="nav-link-dot"></span>05 — Mathematical Indicators</a>
+          <a href="#signals" class="nav-link"><span class="nav-link-dot"></span>06 — Signal Engineering</a>
+        </div>
+        
+        <div class="nav-group">
+          <div class="nav-group-title">Risk & Validation</div>
+          <a href="#backtesting" class="nav-link"><span class="nav-link-dot"></span>07 — Proper Backtesting</a>
+          <a href="#risk" class="nav-link"><span class="nav-link-dot"></span>08 — Risk & Sizing Math</a>
+          <a href="#analytics" class="nav-link"><span class="nav-link-dot"></span>09 — Metrics Decoded</a>
+          <a href="#traps" class="nav-link"><span class="nav-link-dot"></span>10 — Common Backtesting Traps</a>
+        </div>
+        
+        <div class="nav-group">
+          <div class="nav-group-title">Code Library</div>
+          <a href="#toolkit" class="nav-link"><span class="nav-link-dot"></span>11 — Python Quant Toolkit</a>
+        </div>
+        
+        <div class="nav-group" style="margin-top: 3rem;">
+          <div class="nav-group-title">Interactive Quant Tools</div>
+          <a href="calculators/sharpe.html" class="nav-link">Sharpe Ratio Calc</a>
+          <a href="calculators/cagr.html" class="nav-link">CAGR Calculator</a>
+          <a href="calculators/kelly.html" class="nav-link">Kelly Criterion Calc</a>
+          <a href="calculators/position-size.html" class="nav-link">Position Size Calc</a>
+          <a href="calculators/drawdown.html" class="nav-link">Drawdown Calculator</a>
+        </div>
+      </aside>
+      
+      <!-- MAIN HANDBOOK CONTENT -->
+      <main class="main-content">
+        
+        <!-- HERO SECTION -->
+        <div class="hero">
+          <canvas class="hero-canvas-bg" id="hero-canvas-bg"></canvas>
+          <div class="hero-eyebrow">Quant Reference / Systematic Speculation</div>
+          <h1>Think like a quant.<br>Trade like a machine.</h1>
+          <p class="hero-desc">From basic math transformations to advanced statistical validation, this handbook acts as a production-grade blueprint for automated strategy creation. Handcrafted for Python + Pandas. Return to this reference whenever you develop new models.</p>
+          <div class="badge-row">
+            <span class="badge badge-cyan">Python + Pandas</span>
+            <span class="badge badge-purple">Statistical Edge</span>
+            <span class="badge badge-green">NSE / NYSE Equities</span>
+            <span class="badge badge-amber">v1.0 Production Ready</span>
+          </div>
+        </div>
+        
+        <!-- SECTION 00: WHAT IS ALGO TRADING -->
+        <section class="section" id="overview">
+          <div class="section-header">
+            <span class="section-num">00</span>
+            <h2>What Algo Trading Actually Is</h2>
+          </div>
+          <p>At its core, algorithmic trading is simple: <strong>you write rules, the computer follows them exactly, and you measure whether those rules made money.</strong> No emotion. No gut feeling. No "I think this stock looks good." Just rules and math.</p>
+          <p>While a manual retail trader might think, <em>"Reliance looks strong today, I'll buy some,"</em> an algorithmic trader designs a system that evaluates historical data parameters: <em>"Buy Reliance when its 10-day average price crosses above its 50-day average, with volume at least 20% above its 20-day average volume. Sell when the 10-day crosses back below the 50-day."</em> That's a strategy.</p>
+          
+          <h3>Why Systematic Strategies Work</h3>
+          <div class="card-grid">
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">01 / Markets are not perfectly efficient</strong>
+              <p style="font-size: 0.88rem; margin: 0;">If prices were random, no strategy could work. But **human psychology creates repeatable patterns** — panic selling, momentum chasing, and overreactions to news events.</p>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">02 / Institutions move slowly</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Large funds can't buy ₹10,000 crore overnight — they take weeks. This creates **persistent price trends** that systematic strategies can ride.</p>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">03 / Discipline beats intelligence</strong>
+              <p style="font-size: 0.88rem; margin: 0;">A mediocre strategy applied with **perfect discipline beats a great strategy** applied inconsistently. Algos never have bad days or FOMO.</p>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">04 / Speed and scale</strong>
+              <p style="font-size: 0.88rem; margin: 0;">A computer can **scan 500 stocks in seconds**, apply 20 conditions to each, and execute in milliseconds. Humans can't compete on breadth.</p>
+            </div>
+          </div>
+          
+          <div class="callout callout-info">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div class="callout-content">
+              <strong>Minimum Viable Setup (What You Already Have)</strong>
+              Python + yfinance + pandas. That's enough to build, test, and analyze real strategies on real data. You don't need a Bloomberg terminal, API access to broker data, or ₹10 lakh capital to start learning. Free TradingView is perfect for visual validation of your logic.
+            </div>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="overview" id="complete-overview">
+            <label for="complete-overview">Mark Section 00 as Completed • Est. Reading Time: 4 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 01: THE 6-STAGE WORKFLOW -->
+        <section class="section" id="workflow">
+          <div class="section-header">
+            <span class="section-num">01</span>
+            <h2>The 6-Stage Quant Workflow</h2>
+          </div>
+          <p>Every algo trading operation — from a retail Python script to a multi-billion dollar hedge fund — follows this iterative loop. Click each stage to see what actually happens there.</p>
+          
+          <!-- Interactive Flowchart Grid -->
+          <div class="flow-grid">
+            <div class="flow-node active" data-index="0">
+              <span class="flow-node-num">01</span>
+              <span class="flow-node-title">Idea</span>
+              <span class="flow-node-desc">Hypothesis Edge</span>
+            </div>
+            <div class="flow-node" data-index="1">
+              <span class="flow-node-num">02</span>
+              <span class="flow-node-title">Get Data</span>
+              <span class="flow-node-desc">yfinance Pipeline</span>
+            </div>
+            <div class="flow-node" data-index="2">
+              <span class="flow-node-num">03</span>
+              <span class="flow-node-title">Build Strategy</span>
+              <span class="flow-node-desc">Rules → Signals</span>
+            </div>
+            <div class="flow-node" data-index="3">
+              <span class="flow-node-num">04</span>
+              <span class="flow-node-title">Backtest</span>
+              <span class="flow-node-desc">Historical Run</span>
+            </div>
+            <div class="flow-node" data-index="4">
+              <span class="flow-node-num">05</span>
+              <span class="flow-node-title">Analyse</span>
+              <span class="flow-node-desc">Risk Metrics</span>
+            </div>
+            <div class="flow-node" data-index="5">
+              <span class="flow-node-num">06</span>
+              <span class="flow-node-title">Deploy</span>
+              <span class="flow-node-desc">Live Execution</span>
+            </div>
+          </div>
+          
+          <!-- Flowchart Details Box -->
+          <div class="flow-details-box">
+            <div class="flow-details-pane active" id="flow-details-0">
+              <h4>Stage 1 — The Idea (Hypothesis)</h4>
+              <p>Everything starts with a hypothesis about why a pattern should exist. "Stocks that cross above their 50-day average tend to keep rising." "When RSI drops below 30, the stock is oversold and usually bounces back." These conditions are called **signals**.</p>
+              <p>Good ideas come from: academic research (momentum, mean-reversion are extensively documented), market microstructure (how liquidity works), or just observing price patterns. Bad ideas come from random chart gazing without a structural why.</p>
+              <div class="callout callout-info">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <div class="callout-content">
+                  <strong>Key Question:</strong> Why should this edge exist? If you can't answer that, the backtest result is probably statistical noise.
+                </div>
+              </div>
+            </div>
+            
+            <div class="flow-details-pane" id="flow-details-1">
+              <h4>Stage 2 — Get Data</h4>
+              <p>With <code>yfinance</code>, one line gets you years of daily OHLCV data (Open, High, Low, Close, Volume) for any ticker. For NSE stocks, append <code>.NS</code> to the symbol: <code>RELIANCE.NS</code>, <code>TCS.NS</code>, <code>HDFCBANK.NS</code>.</p>
+              <p>Data quality matters: <code>auto_adjust=True</code> adjusts for splits and dividends automatically — always use this. Missing data and corporate actions (splits, mergers) are the most common source of silent bugs in backtests.</p>
+              
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-title">data_fetch.py</span>
+                  <span class="code-lang-label">Python</span>
+                </div>
+                <pre><code class="language-python">import yfinance as yf
+
+# Single stock
+df = yf.download('RELIANCE.NS', start='2019-01-01', end='2024-12-31', auto_adjust=True)
+
+# Multiple stocks at once
+tickers = ['RELIANCE.NS', 'TCS.NS', 'HDFCBANK.NS', 'INFY.NS']
+data = yf.download(tickers, start='2019-01-01', auto_adjust=True)</code></pre>
+              </div>
+            </div>
+            
+            <div class="flow-details-pane" id="flow-details-2">
+              <h4>Stage 3 — Build the Strategy</h4>
+              <p>Turn your hypothesis into **precise, unambiguous rules**. "It looks bullish" is not a rule. "The 10-day SMA crosses above the 50-day SMA AND today's volume is &gt; 1.2× the 20-day average volume" is a rule.</p>
+              <p>Every strategy needs: an **entry condition** (when to buy), an **exit condition** (when to sell), and a **position size rule** (how much to buy). Missing any one of these is not a complete strategy.</p>
+            </div>
+            
+            <div class="flow-details-pane" id="flow-details-3">
+              <h4>Stage 4 — Backtest</h4>
+              <p>Run your rules on historical data and simulate what would have happened. The critical discipline: **never look at the OOS (out-of-sample) data while building**. Hold back 20–30% of your data as a clean validation set.</p>
+              <p>Vectorized backtesting (what we do with pandas) simulates all trades at once using array operations — fast, simple. Event-driven backtesting (backtesting.py, zipline) simulates day-by-day like a real system — more realistic, captures things like partial fills.</p>
+            </div>
+            
+            <div class="flow-details-pane" id="flow-details-4">
+              <h4>Stage 5 — Analyse the Output</h4>
+              <p>Most beginners either trust a good-looking return number blindly, or drown in metrics they don't understand. Section 09 of this guide decodes every number.</p>
+              <p>The key questions: Did it beat buy-and-hold? Is the Sharpe Ratio &gt; 1? Is the max drawdown something you could psychologically survive? Are there enough trades to be statistically meaningful (&gt;30)?</p>
+            </div>
+            
+            <div class="flow-details-pane" id="flow-details-5">
+              <h4>Stage 6 — Deploy / Iterate</h4>
+              <p><strong>Paper trading first</strong> — most brokers offer paper trading (Zerodha Sensibull, Interactive Brokers paper, etc.). Run the strategy for at least 1–3 months on paper before risking real money. Real markets have slippage, partial fills, and data feed delays that backtests miss.</p>
+              <p>Usually you find problems and go back to Stage 1. This is normal. Even professional quants iterate dozens of times. The loop is the process.</p>
+              <div class="callout callout-warn">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+                <div class="callout-content">
+                  <strong>Roadmap after paper trading:</strong> For live execution with Python, look into Zerodha Kite Connect API (NSE) or Alpaca (US markets) — both have free tiers and Python SDKs.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="workflow" id="complete-workflow">
+            <label for="complete-workflow">Mark Section 01 as Completed • Est. Reading Time: 6 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 02: SMA CROSSOVER STRATEGY -->
+        <section class="section" id="first-code">
+          <div class="section-header">
+            <span class="section-num">02</span>
+            <h2>Your First Strategy — SMA Crossover</h2>
+          </div>
+          <p>The SMA crossover is the "Hello World" of algo trading. Simple enough to understand completely, complex enough to teach you all the core concepts. The idea: when the short moving average crosses above the long one, a new uptrend may be starting.</p>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">complete_crossover.py</span>
+              <span class="code-lang-label">Python</span>
+            </div>
+            <pre><code class="language-python">import yfinance as yf
+import pandas as pd
+import numpy as np
+
+# ── STEP 1: GET DATA ───────────────────────────────────
+# .NS suffix = NSE (National Stock Exchange India)
+# auto_adjust=True → splits and dividends handled automatically
+ticker     = 'RELIANCE.NS'
+start_date = '2020-01-01'
+end_date   = '2024-12-31'
+
+data = yf.download(ticker, start=start_date, end=end_date, auto_adjust=True)
+data = data[['Close']].copy()
+
+# ── STEP 2: COMPUTE MOVING AVERAGES ───────────────────
+# SMA(10) = average of last 10 days → reacts fast to price changes
+# SMA(50) = average of last 50 days → shows the bigger, slower trend
+# When fast > slow: uptrend. When fast < slow: downtrend.
+short_window = 10
+long_window  = 50
+
+data['SMA_short'] = data['Close'].rolling(window=short_window).mean()
+data['SMA_long']  = data['Close'].rolling(window=long_window).mean()
+
+# ── STEP 3: GENERATE SIGNALS ──────────────────────────
+# Signal = 1 when we SHOULD be in the market, 0 when we shouldn't
+# Short MA above long MA = bullish = hold the stock
+data['Signal'] = 0
+data.loc[data['SMA_short'] > data['SMA_long'], 'Signal'] = 1
+
+# Position = CHANGE in signal
+# +1 = just crossed up → BUY today
+# -1 = just crossed down → SELL today
+#  0 = no change, hold current position
+data['Position'] = data['Signal'].diff()
+
+# ── STEP 4: CALCULATE RETURNS ─────────────────────────
+# Daily return = today's % price change
+# Strategy return = daily return ONLY on days we're in the market
+# .shift(1) is CRITICAL: use yesterday's signal for today's return
+# (In real life, you see the crossover after market close, 
+#  so you can only act the NEXT day's open)
+data['Daily_Return']    = data['Close'].pct_change()
+data['Strategy_Return'] = data['Daily_Return'] * data['Signal'].shift(1)
+
+# Cumulative returns: how ₹1 grows over time
+data['Cum_Market']   = (1 + data['Daily_Return']).cumprod()
+data['Cum_Strategy'] = (1 + data['Strategy_Return']).cumprod()
+
+# ── STEP 5: COMPUTE METRICS ───────────────────────────
+years = len(data) / 252   # 252 = avg trading days in a year
+
+total_ret  = (data['Cum_Strategy'].iloc[-1] - 1) * 100
+cagr       = (data['Cum_Strategy'].iloc[-1] ** (1/years) - 1) * 100
+mkt_cagr   = (data['Cum_Market'].iloc[-1]   ** (1/years) - 1) * 100
+
+# Sharpe: annualized excess return / annualized volatility
+daily_avg    = data['Strategy_Return'].mean()
+daily_std    = data['Strategy_Return'].std()
+sharpe       = (daily_avg / daily_std) * (252 ** 0.5) if daily_std != 0 else 0
+
+# Max drawdown: worst peak-to-trough loss
+rolling_max  = data['Cum_Strategy'].cummax()
+drawdown     = (data['Cum_Strategy'] - rolling_max) / rolling_max
+max_dd       = drawdown.min() * 100
+
+# Win rate
+in_market    = data[data['Signal'].shift(1) == 1]['Strategy_Return']
+win_rate     = (in_market > 0).sum() / len(in_market) * 100 if len(in_market) > 0 else 0
+gross_profit = in_market[in_market > 0].sum()
+gross_loss   = abs(in_market[in_market < 0].sum())
+profit_factor = gross_profit / gross_loss if gross_loss != 0 else float('inf')
+num_trades   = (data['Position'] == 1).sum()
+
+print(f"CAGR:          {cagr:+.1f}%  (market: {mkt_cagr:+.1f}%)")
+print(f"Total Return:  {total_ret:+.1f}%")
+print(f"Sharpe Ratio:  {sharpe:.2f}  (>1 = good)")
+print(f"Max Drawdown:  {max_dd:.1f}%")
+print(f"Win Rate:      {win_rate:.1f}%")
+print(f"Profit Factor: {profit_factor:.2f}")
+print(f"Num Trades:    {num_trades}")</code></pre>
+          </div>
+          
+          <h3>How to Try Variations</h3>
+          <div class="card-grid">
+            <div class="card">
+              <strong>Different Tickers</strong>
+              <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">Try <code>TCS.NS</code>, <code>INFY.NS</code>, <code>TATASTEEL.NS</code>, <code>NIFTYBEES.NS</code> (Nifty ETF). Each has a different personality — tech stocks trend differently than cyclicals.</p>
+            </div>
+            <div class="card">
+              <strong>Different Windows</strong>
+              <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">Try <code>5/20</code> (faster, more trades), <code>20/100</code> (slower, fewer trades), <code>50/200</code> (the "Golden Cross" — very well known). Notice how metrics shift.</p>
+            </div>
+            <div class="card">
+              <strong>Add a Volume Filter</strong>
+              <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">Only enter when <code>Volume > 1.2 × Volume.rolling(20).mean()</code>. This filters low-conviction crossovers. Observe if win rate improves.</p>
+            </div>
+            <div class="card">
+              <strong>Use EMA Instead</strong>
+              <p style="font-size: 0.88rem; margin: 0.25rem 0 0;">Replace <code>.rolling(n).mean()</code> with <code>.ewm(span=n).mean()</code>. EMA reacts faster — signals come earlier but may be noisier.</p>
+            </div>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="first-code" id="complete-first-code">
+            <label for="complete-first-code">Mark Section 02 as Completed • Est. Reading Time: 5 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 03: READING BACKTEST METRICS -->
+        <section class="section" id="reading">
+          <div class="section-header">
+            <span class="section-num">03</span>
+            <h2>Reading Your Backtest Results</h2>
+          </div>
+          <p>When you run that script, you get a block of numbers. Here's exactly how to interpret them — with a good example and a bad example that looks deceptively okay.</p>
+          
+          <div class="card-grid">
+            <div class="card" style="border-left: 4px solid var(--green-accent);">
+              <span class="badge badge-green" style="margin-bottom: 0.5rem;">✓ Good Result</span>
+              <p style="font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.8; margin: 0;">
+                CAGR:          +18.2%  (market: +12.1%)<br>
+                Total Return:  +142%<br>
+                Sharpe Ratio:  1.4  ← above 1.0<br>
+                Max Drawdown:  -18%  ← survivable<br>
+                Win Rate:      54%<br>
+                Profit Factor: 1.8  ← gains > losses<br>
+                Num Trades:    38  ← statistically ok
+              </p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--red-accent);">
+              <span class="badge badge-red" style="margin-bottom: 0.5rem;">✗ Deceptive / Poor Result</span>
+              <p style="font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.8; margin: 0;">
+                CAGR:          +14%   (market: +12%)<br>
+                Total Return:  +96%<br>
+                Sharpe Ratio:  0.6  ← poor risk/reward<br>
+                Max Drawdown:  -55%  ← could you hold?<br>
+                Win Rate:      62%  ← looks good...<br>
+                Profit Factor: 0.9  ← losses > gains!<br>
+                Num Trades:    4  ← just luck
+              </p>
+            </div>
+          </div>
+          
+          <h3>The Questions to Ask Every Time</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>What to look for</th>
+                  <th>Red Flag</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Did it beat buy-and-hold?</strong></td>
+                  <td>Strategy CAGR &gt; market CAGR by a meaningful margin</td>
+                  <td>Barely beats market → not worth the execution complexity</td>
+                </tr>
+                <tr>
+                  <td><strong>Is risk-adjusted return good?</strong></td>
+                  <td>Sharpe Ratio &gt; 1.0</td>
+                  <td>Sharpe &lt; 0.7 → returns don't justify the trading volatility</td>
+                </tr>
+                <tr>
+                  <td><strong>Could you survive the drawdown?</strong></td>
+                  <td>Max drawdown &lt; 20-25%</td>
+                  <td>&gt;40% drawdown → most people quit before recovery occurs</td>
+                </tr>
+                <tr>
+                  <td><strong>Enough trades to be real?</strong></td>
+                  <td>&gt;30 trades minimum, &gt;100 preferred</td>
+                  <td>&lt;10 trades → purely luck, proves nothing</td>
+                </tr>
+                <tr>
+                  <td><strong>Do gains outsize losses?</strong></td>
+                  <td>Profit Factor &gt; 1.35</td>
+                  <td>&lt; 1.0 → you're actually losing money overall after transaction costs</td>
+                </tr>
+                <tr>
+                  <td><strong>Does it beat the market after costs?</strong></td>
+                  <td>Positive after ₹40/trade + 0.1% slippage</td>
+                  <td>Strategy returns evaporate after modeling execution fees</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="reading" id="complete-reading">
+            <label for="complete-reading">Mark Section 03 as Completed • Est. Reading Time: 4 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 04: CORE STRATEGY TYPES -->
+        <section class="section" id="strategies">
+          <div class="section-header">
+            <span class="section-num">04</span>
+            <h2>Strategy Types — What Edge Are You Exploiting?</h2>
+          </div>
+          <p>Every strategy is a bet on a specific **market inefficiency**. Knowing which type you're running determines what data matters, how to judge results, and what structural failure looks like.</p>
+          
+          <div class="strat-tabs">
+            <div class="strat-tab active" data-target="strat-trend">Trend Following</div>
+            <div class="strat-tab" data-target="strat-reversion">Mean Reversion</div>
+            <div class="strat-tab" data-target="strat-momentum">Momentum</div>
+            <div class="strat-tab" data-target="strat-breakout">Breakout</div>
+            <div class="strat-tab" data-target="strat-arb">Stat Arbitrage</div>
+            <div class="strat-tab" data-target="strat-ml">ML-Based</div>
+          </div>
+          
+          <div class="strat-panels">
+            <!-- Trend Panel -->
+            <div class="strat-panel active" id="strat-trend">
+              <h4>Trend Following</h4>
+              <p>The oldest and most robust category. Assets that have been rising tend to continue rising — because **institutional fund flows are persistent**. Large funds can't buy ₹10,000 crore in a day, so they accumulate over weeks, creating trends.</p>
+              <div class="badge-row">
+                <span class="badge badge-cyan">Period: Weeks to months</span>
+                <span class="badge badge-purple">Win Rate: ~35–45%</span>
+                <span class="badge badge-green">High R:R ratio</span>
+              </div>
+              <p style="margin-top: 1rem;"><strong>The counterintuitive truth:</strong> Trend strategies lose more often than they win. A 40% win rate can still be very profitable if winning trades are 3× the size of losing trades. Never judge a trend strategy by win rate alone.</p>
+              <p><strong>Signals:</strong> SMA/EMA crossovers, ADX &gt; 25 (confirms trend), Ichimoku cloud position, Donchian channel breakout.</p>
+              <div class="callout callout-warn">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+                <div class="callout-content">
+                  <strong>When it fails:</strong> Choppy sideways markets. ADX below 20 means no trend — trend strategies will get whipsawed repeatedly. Use ADX as a regime filter.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Reversion Panel -->
+            <div class="strat-panel" id="strat-reversion">
+              <h4>Mean Reversion</h4>
+              <p>Bets that prices which have moved too far from their average will snap back. Works because **short-term returns are negatively autocorrelated** — statistically, extreme single-day moves tend to partially reverse.</p>
+              <div class="badge-row">
+                <span class="badge badge-cyan">Period: Hours to days</span>
+                <span class="badge badge-purple">Win Rate: ~60–70%</span>
+                <span class="badge badge-green">Low R:R ratio</span>
+              </div>
+              <p style="margin-top: 1rem;"><strong>The Trap:</strong> High win rate feels great until a trending move wipes out 10 wins at once. <em>Always use a strict stop-loss.</em> The classic blowup is "it'll come back" — sometimes it doesn't.</p>
+              <p><strong>Signals:</strong> RSI &lt; 30 / &gt; 70, Bollinger Band lower/upper touch, Z-score of price deviation from MA.</p>
+              <div class="callout callout-danger">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+                <div class="callout-content">
+                  <strong>Key Rule:</strong> Never run a mean-reversion strategy without a stop-loss. One unhedged trend move can erase weeks of small wins.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Momentum Panel -->
+            <div class="strat-panel" id="strat-momentum">
+              <h4>Momentum (Cross-Sectional)</h4>
+              <p>Based on the academically documented fact that **stocks outperforming in the last 3–12 months tend to keep outperforming for the next 1–3 months**. One of the most replicated anomalies in finance literature.</p>
+              <div class="badge-row">
+                <span class="badge badge-cyan">Period: Weeks to months</span>
+                <span class="badge badge-purple">Win Rate: ~50–60%</span>
+                <span class="badge badge-green">Cross-sectional ranking</span>
+              </div>
+              <p style="margin-top: 1rem;"><strong>Cross-sectional:</strong> Rank a universe of stocks by their 12-1 month return (skip the last month — it tends to reverse). Go long the top decile, short the bottom. Market-neutral.<br><strong>Time-series:</strong> Go long a stock only if its own recent return is positive.</p>
+              <div class="callout callout-warn">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+                <div class="callout-content">
+                  <strong>Momentum crash risk:</strong> Momentum strategies can crash violently during sharp market reversals (e.g. March 2020). Size appropriately.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Breakout Panel -->
+            <div class="strat-panel" id="strat-breakout">
+              <h4>Breakout</h4>
+              <p>Enters when price breaks through a resistance or support level. Theory: when a level is broken, trapped traders on the wrong side accelerate the move by covering positions.</p>
+              <div class="badge-row">
+                <span class="badge badge-cyan">Period: Days to weeks</span>
+                <span class="badge badge-purple">Win Rate: ~35–45%</span>
+                <span class="badge badge-green">Very high R:R potential</span>
+              </div>
+              <p style="margin-top: 1rem;"><strong>Signals:</strong> Donchian channel breakout (N-day high), volume confirmation (&gt;150% of 20-day avg — critical), ATR-based price targets.</p>
+              <div class="callout callout-warn">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+                <div class="callout-content">
+                  <strong>False breakout problem:</strong> 60–70% of breakouts fail without volume confirmation. Always wait for a daily close above the level, not just an intraday pierce. Volume is not optional.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Stat Arb Panel -->
+            <div class="strat-panel" id="strat-arb">
+              <h4>Statistical Arbitrage (Pairs Trading)</h4>
+              <p>Exploits mispricings between statistically related instruments. If HDFCBANK and ICICIBANK historically move together (cointegrated), when they diverge, short the outperformer and long the underperformer — betting on convergence.</p>
+              <div class="badge-row">
+                <span class="badge badge-cyan">Market-neutral</span>
+                <span class="badge badge-purple">Requires cointegration test</span>
+                <span class="badge badge-green">Medium complexity</span>
+              </div>
+              
+              <div class="formula-block" style="margin-top: 1rem;">
+                <span class="formula-label">Z-score of spread — the trading signal</span>
+                Spread = Price_A - (Hedge_Ratio * Price_B)<br>
+                Z = (Spread - mean(Spread)) / std(Spread)<br>
+                Enter long spread when Z &lt; -2, exit when Z → 0<br>
+                Enter short spread when Z &gt; +2, exit when Z → 0
+              </div>
+              <p>Test cointegration with <code>statsmodels.tsa.stattools.coint()</code>. If p-value &lt; 0.05, the pair is statistically cointegrated and suitable for pairs trading.</p>
+            </div>
+            
+            <!-- ML Panel -->
+            <div class="strat-panel" id="strat-ml">
+              <h4>ML-Based Strategies</h4>
+              <p>Uses machine learning to find non-linear patterns in features. <strong>The dirty secret: simpler models generalize better in finance.</strong> XGBoost usually beats LSTM for tabular price data. LSTM sounds more impressive but overfits harder.</p>
+              <div class="badge-row">
+                <span class="badge badge-cyan">High overfitting risk</span>
+                <span class="badge badge-purple">Feature engineering critical</span>
+                <span class="badge badge-green">Non-linear patterns</span>
+              </div>
+              <p style="margin-top: 1rem;"><strong>What works:</strong> ML on <em>classification</em> (will price be higher in 5 days? yes/no) or <em>ranking</em> (which of these 50 stocks will do best?). ML on <em>exact price prediction</em> almost never works — the signal-to-noise ratio in price data is too low.</p>
+              <div class="callout callout-danger">
+                <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+                <div class="callout-content">
+                  <strong>ML Pitfall — Lookahead Bias:</strong> Only use features available at time T to predict time T+1. Rolling window features must use `.shift(1)`. A model trained with future data looks perfect and fails completely in live trading.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="strategies" id="complete-strategies">
+            <label for="complete-strategies">Mark Section 04 as Completed • Est. Reading Time: 7 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 05: MATHEMATICAL INDICATORS -->
+        <section class="section" id="indicators">
+          <div class="section-header">
+            <span class="section-num">05</span>
+            <h2>Indicators — The Math Behind Them</h2>
+          </div>
+          <p>Indicators are not magic. They are **mathematical transformations of price and volume**. Understanding their formulas tells you exactly what they measure — and exactly where they lie to you.</p>
+          
+          <h3>SMA vs EMA — The Foundation</h3>
+          <div class="formula-block">
+            <span class="formula-label">SMA — Simple Moving Average</span>
+            SMA(n) = (P_1 + P_2 + ... + P_n) / n   ← equal weight to all n days<br><br>
+            <span class="formula-label">EMA — Exponential Moving Average</span>
+            EMA(today) = Price(today) * k + EMA(yesterday) * (1 - k)<br>
+            k = 2 / (n + 1)  →  EMA(10): k = 0.1818  →  18.2% weight on today's price<br>
+            vs SMA(10): only 10% weight on today's price
+          </div>
+          <p>EMA reacts faster to recent moves (useful in fast markets, noisier). SMA is smoother (better for trend identification, less whipsawing). For short-term signals, use EMA. For long-term trend detection, SMA is fine.</p>
+          
+          <h3>RSI — What It Actually Measures</h3>
+          <div class="formula-block">
+            <span class="formula-label">RSI (14-period default)</span>
+            RS  = Average Gain over 14 days / Average Loss over 14 days<br>
+            RSI = 100 - (100 / (1 + RS))<br><br>
+            Extreme moves: RS=9 → RSI=90 (9× more up days). RS=0.11 → RSI=10 (9× more down days)
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>RSI Level</th>
+                  <th>Traditional Read</th>
+                  <th>Reality</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color: var(--green-accent); font-weight: 700;">&gt; 70</td>
+                  <td>Overbought → sell</td>
+                  <td>In strong uptrends, RSI stays &gt;70 for weeks. Selling purely on this signal in a bull market is expensive.</td>
+                </tr>
+                <tr>
+                  <td style="color: var(--amber-accent); font-weight: 700;">50–70</td>
+                  <td>Bullish momentum</td>
+                  <td>RSI crossing 50 from below is a reliable trend-confirmation signal. Better use than the 70 level.</td>
+                </tr>
+                <tr>
+                  <td style="color: var(--amber-accent); font-weight: 700;">30–50</td>
+                  <td>Bearish momentum</td>
+                  <td>RSI crossing 50 from above signals building selling pressure.</td>
+                </tr>
+                <tr>
+                  <td style="color: var(--red-accent); font-weight: 700;">&lt; 30</td>
+                  <td>Oversold → buy</td>
+                  <td>In downtrends, RSI stays &lt;30 for days. "Catching falling knives" without a trend filter is dangerous.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-info">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div class="callout-content">
+              <strong>RSI Divergence (Stronger Signal):</strong> Price makes a new high but RSI makes a lower high → bearish divergence, often precedes a reversal. Much stronger than the 70/30 levels alone because it shows momentum fading before the price reacts.
+            </div>
+          </div>
+          
+          <h3>Bollinger Bands — Volatility Encoded</h3>
+          <div class="formula-block">
+            <span class="formula-label">Bollinger Bands (20-period, 2σ)</span>
+            Middle Band = SMA(20)<br>
+            Upper Band  = SMA(20) + 2 * StdDev(Close, 20)<br>
+            Lower Band  = SMA(20) - 2 * StdDev(Close, 20)<br><br>
+            %B = (Close - Lower) / (Upper - Lower)  → 0 = at lower, 1 = at upper, 0.5 = at middle<br>
+            BB Width = (Upper - Lower) / Middle  → measures current volatility relative to average
+          </div>
+          <p>The bands encode **volatility** — they expand in high-vol periods and contract in low-vol periods. Tight bands (low BB Width) = volatility compression = potential breakout loading. Wide bands = high volatility = mean reversion more likely.</p>
+          
+          <h3>MACD — Three Signals in One</h3>
+          <div class="formula-block">
+            <span class="formula-label">MACD (12/26/9 — the universal defaults)</span>
+            MACD Line   = EMA(12) - EMA(26)       ← faster MA minus slower MA<br>
+            Signal Line = EMA(9) of MACD Line     ← smoothed version of MACD<br>
+            Histogram   = MACD Line - Signal Line ← momentum of momentum
+          </div>
+          <p>The histogram is the most useful part. **Growing histogram = momentum building.** Shrinking histogram = momentum fading — often precedes a crossover signal by a few bars, giving earlier warning than the raw crossover.</p>
+          
+          <h3>ATR — For Stops and Sizing</h3>
+          <div class="formula-block">
+            <span class="formula-label">ATR (Average True Range, 14-period)</span>
+            True Range  = max(High - Low,  |High - Prev Close|,  |Low - Prev Close|)<br>
+            ATR(14)     = Wilder smooth of 14-period True Range averages<br><br>
+            If ATR = ₹50: the stock moves ~₹50 on an average day (normal noise)
+          </div>
+          <p>ATR is critical for stop-loss placement. A stop-loss at ₹20 on a stock with ATR=₹50 guarantees you get stopped out by random daily noise. **Rule: stops at 1.5×–2× ATR from entry.**</p>
+          
+          <h3>ADX — Is There a Trend at All?</h3>
+          <div class="formula-block">
+            <span class="formula-label">ADX Interpretation (Threshold-based)</span>
+            ADX &lt; 20:    No meaningful trend → ranging market, avoid trend strategies<br>
+            ADX 20–25:   Trend developing → caution<br>
+            ADX 25–40:   Strong trend → ideal for trend-following entry<br>
+            ADX &gt; 40:    Very strong trend → consider partial profit-taking
+          </div>
+          <div class="callout callout-info">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div class="callout-content">
+              <strong>ADX as a Regime Filter:</strong> The most powerful use of ADX is not as a signal generator — it's as a <em>regime switch</em>. Only run trend strategies when ADX &gt; 25. Switch to mean-reversion when ADX &lt; 20. This one change can dramatically improve both strategy types.
+            </div>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="indicators" id="complete-indicators">
+            <label for="complete-indicators">Mark Section 05 as Completed • Est. Reading Time: 6 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 06: SIGNAL ENGINEERING -->
+        <section class="section" id="signals">
+          <div class="section-header">
+            <span class="section-num">06</span>
+            <h2>Signal Engineering</h2>
+          </div>
+          <p>A raw indicator reading is not a signal. A **signal is a precise, testable rule with a binary output: enter or exit**. The engineering between "RSI is low" and a real trading signal is where most of the actual edge comes from.</p>
+          
+          <h3>Signal Quality Hierarchy</h3>
+          <div class="card-grid">
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Level 1 — Raw Threshold</strong>
+              <p style="font-size: 0.88rem; margin: 0;">RSI &lt; 30 → buy. Maximum false signals. Works occasionally by coincidence, not by design.</p>
+              <span class="badge badge-amber" style="margin-top:0.75rem;">High Noise</span>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Level 2 — Confirmation</strong>
+              <p style="font-size: 0.88rem; margin: 0;">RSI &lt; 30 <strong>AND</strong> price &gt; SMA(200). Filters out bear market trades. Better, but still incomplete.</p>
+              <span class="badge badge-cyan" style="margin-top:0.75rem;">Better</span>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Level 3 — Regime Filter</strong>
+              <p style="font-size: 0.88rem; margin: 0;">RSI &lt; 30 AND SMA(50) &gt; SMA(200) AND ADX &gt; 20. Only trades in the right market environment.</p>
+              <span class="badge badge-green" style="margin-top:0.75rem;">Stronger</span>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Level 4 — Multi-Timeframe</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Daily trend up → zoom into 4H → RSI oversold there → enter. Higher TF sets direction, lower TF gives timing.</p>
+              <span class="badge badge-green" style="margin-top:0.75rem;">Professional Grade</span>
+            </div>
+          </div>
+          
+          <h3>Regime-Aware Signal Logic</h3>
+          <div class="code-container" style="margin-top: 2rem;">
+            <div class="code-header">
+              <span class="code-title">regime_logic.py</span>
+              <span class="code-lang-label">Python</span>
+            </div>
+            <pre><code class="language-python"># Compute regime indicators first
+data['SMA200']   = data['Close'].rolling(200).mean()
+data['BB_width']  = (data['BB_upper'] - data['BB_lower']) / data['SMA20']
+# (assumes you've computed ADX, BB_upper, BB_lower, SMA20 already)
+
+def get_regime(row):
+    if row['ADX_14'] > 25 and row['Close'] > row['SMA200']:
+        return 'trending_up'
+    elif row['ADX_14'] > 25 and row['Close'] < row['SMA200']:
+        return 'trending_down'   # stay flat or short
+    elif row['BB_width'] < 0.05:
+        return 'squeeze'           # breakout strategy
+    else:
+        return 'ranging'           # mean reversion strategy
+
+data['regime'] = data.apply(get_regime, axis=1)
+
+# Apply different logic per regime
+data['signal'] = 0
+data.loc[(data['regime'] == 'trending_up')  & (data['SMA_short'] > data['SMA_long']), 'signal'] = 1
+data.loc[(data['regime'] == 'ranging')       & (data['RSI_14'] < 30), 'signal'] = 1</code></pre>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="signals" id="complete-signals">
+            <label for="complete-signals">Mark Section 06 as Completed • Est. Reading Time: 4 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 07: PROPER BACKTESTING -->
+        <section class="section" id="backtesting">
+          <div class="section-header">
+            <span class="section-num">07</span>
+            <h2>Backtesting — The Right Way</h2>
+          </div>
+          <p>Backtesting is the most **abused tool in retail trading**. Done naively, it tells you nothing useful. The difference between a useful backtest and a lie is methodology.</p>
+          
+          <h3>The Three-Way Data Split</h3>
+          <div class="card-grid">
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">In-Sample (IS) ~60%</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Design and tune parameters here. You're allowed to look at this data. e.g. 2015–2020.</p>
+              <span class="badge badge-cyan" style="margin-top:0.75rem;">Design Zone</span>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Out-of-Sample (OOS) ~20%</strong>
+              <p style="font-size: 0.88rem; margin: 0;"><strong>Never touch during design.</strong> Run the strategy here once to validate. e.g. 2021–2022.</p>
+              <span class="badge badge-green" style="margin-top:0.75rem;">Validation</span>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Live / Paper ~20%</strong>
+              <p style="font-size: 0.88rem; margin: 0;">The only truly clean test is real future data. Paper trade for 1-3 months before allocating real money.</p>
+              <span class="badge badge-amber" style="margin-top:0.75rem;">Final Test</span>
+            </div>
+          </div>
+          
+          <h3>Realistic Cost Modelling</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cost</th>
+                  <th>What it is</th>
+                  <th>Estimate</th>
+                  <th>How to Model</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Commission</strong></td>
+                  <td>Broker fee</td>
+                  <td>₹20–40/trade (Zerodha)</td>
+                  <td>Subtract from each trade return</td>
+                </tr>
+                <tr>
+                  <td><strong>Slippage</strong></td>
+                  <td>Signal price vs fill price</td>
+                  <td>0.05–0.15% per trade</td>
+                  <td>Adjust fill price by 0.1% against you</td>
+                </tr>
+                <tr>
+                  <td><strong>Bid-Ask Spread</strong></td>
+                  <td>Cost of crossing the spread</td>
+                  <td>0.02–0.05% (Nifty large-cap)</td>
+                  <td>Add to slippage estimate</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-warn">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+            <div class="callout-content">
+              <strong>Rule of Thumb:</strong> A strategy making 20% before costs often makes 14–16% after realistic transaction fees. If your strategy trades daily, costs alone can consume 5–8% of annual returns.
+            </div>
+          </div>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">walk_forward.py</span>
+              <span class="code-lang-label">Python</span>
+            </div>
+            <pre><code class="language-python">def walk_forward_test(data, is_months=18, oos_months=6):
+    """
+    Rolls a window: train on is_months, test on oos_months,
+    advance by oos_months, repeat. Returns stitched OOS results.
+    More rigorous than a single IS/OOS split.
+    """
+    results = []
+    data['date'] = pd.to_datetime(data.index)
+    window_start = data['date'].iloc[0]
+
+    while True:
+        is_end  = window_start + pd.DateOffset(months=is_months)
+        oos_end = is_end       + pd.DateOffset(months=oos_months)
+        if oos_end > data['date'].iloc[-1]: break
+
+        is_data  = data[(data['date'] >= window_start) & (data['date'] < is_end)]
+        oos_data = data[(data['date'] >= is_end)       & (data['date'] < oos_end)]
+
+        best_params = optimize_strategy(is_data)   # your param search
+        oos_result  = run_strategy(oos_data, best_params)
+        results.append(oos_result)
+        window_start += pd.DateOffset(months=oos_months)
+
+    return pd.concat(results)</code></pre>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="backtesting" id="complete-backtesting">
+            <label for="complete-backtesting">Mark Section 07 as Completed • Est. Reading Time: 6 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 08: RISK MANAGEMENT & POSITION SIZING -->
+        <section class="section" id="risk">
+          <div class="section-header">
+            <span class="section-num">08</span>
+            <h2>Risk Management & Position Sizing</h2>
+          </div>
+          <p>Position sizing is the **most underrated concept in retail trading**. You can have a profitable strategy and blow up your account with bad sizing. Conversely, a mediocre strategy with excellent sizing can survive for years.</p>
+          
+          <h3>Fixed Fractional Sizing</h3>
+          <div class="formula-block">
+            <span class="formula-label">Fixed Fractional Position Sizing</span>
+            Risk Amount   = Account Balance * Risk% (e.g. 1%)<br>
+            Position Size = Risk Amount / (Entry Price - Stop Loss Price)<br><br>
+            Example: ₹1,00,000 account, 1% risk, entry ₹500, stop at ₹480 (₹20 risk)<br>
+            Position = ₹1,000 / ₹20 = 50 shares
+          </div>
+          
+          <h3>The Kelly Criterion</h3>
+          <p>The Kelly Criterion calculates the mathematically optimal allocation size to maximize long-term growth. Because Full Kelly sizing results in highly volatile drawdowns, most professional quants use **Half Kelly** sizing.</p>
+          <div class="formula-block">
+            <span class="formula-label">Kelly Sizing %</span>
+            Kelly % = Win Rate - ((1 - Win Rate) / Reward-Risk Ratio)<br>
+            Half Kelly = Kelly % / 2
+          </div>
+          
+          <h3>Stop-Loss Placement Methods</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Formula</th>
+                  <th>Best For</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ATR-based</strong></td>
+                  <td>Entry - 1.5 * ATR(14)</td>
+                  <td>Most strategies — adapts to current volatility regime</td>
+                </tr>
+                <tr>
+                  <td><strong>Structure-based</strong></td>
+                  <td>Below recent swing low</td>
+                  <td>Trend and breakout strategies</td>
+                </tr>
+                <tr>
+                  <td><strong>Fixed %</strong></td>
+                  <td>Entry * (1 - 0.05)</td>
+                  <td>Simple, but ignores volatility — can be too wide or too tight</td>
+                </tr>
+                <tr>
+                  <td><strong>Chandelier Exit</strong></td>
+                  <td>Highest High(22) - 3 * ATR(22)</td>
+                  <td>Trailing stop for trend-following — adapts as price moves up</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="risk" id="complete-risk">
+            <label for="complete-risk">Mark Section 08 as Completed • Est. Reading Time: 5 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 09: ANALYTICS — EVERY METRIC DECODED -->
+        <section class="section" id="analytics">
+          <div class="section-header">
+            <span class="section-num">09</span>
+            <h2>Analytics — Every Metric Decoded</h2>
+          </div>
+          
+          <h3>Return & Risk-Adjusted Metrics</h3>
+          <div class="card-grid">
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">CAGR</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Compound Annual Growth Rate. Measures geometric progression rates. Target: &gt;15% to beat benchmark indices.</p>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Sharpe Ratio</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Measures annualized excess return per unit of overall volatility standard deviation. Target: &gt;1.0.</p>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Sortino Ratio</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Only penalizes downside volatility. Prefer over Sharpe for asymmetrical returns. Target: &gt;1.5.</p>
+            </div>
+            <div class="card">
+              <strong style="color: var(--cyan-accent); font-family: var(--font-mono); font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Calmar Ratio</strong>
+              <p style="font-size: 0.88rem; margin: 0;">Calculates CAGR divided by absolute maximum drawdown. Target: &gt;1.5.</p>
+            </div>
+          </div>
+          
+          <div class="callout callout-info" style="margin-top: 1.5rem;">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div class="callout-content">
+              <strong>Sortino vs Sharpe:</strong> Sharpe penalizes ALL volatility (both up and down moves). Sortino only penalizes downside volatility. A strategy with large winning days and small losing days has a much better Sortino than Sharpe. Prefer Sortino.
+            </div>
+          </div>
+          
+          <h3>Expectancy</h3>
+          <div class="formula-block">
+            <span class="formula-label">Expectancy — The Most Important Per-Trade Metric</span>
+            Expectancy = (Win Rate * Avg Win) - (Loss Rate * Avg Loss)<br><br>
+            Example: 45% win rate, avg win ₹2,000, avg loss ₹800:<br>
+            Expectancy = (0.45 * 2000) - (0.55 * 800) = 900 - 440 = +₹460 expected per trade
+          </div>
+          
+          <h3>Drawdown Analysis</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Measures</th>
+                  <th>Thresholds</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Max Drawdown</strong></td>
+                  <td>Worst peak-to-trough loss</td>
+                  <td>&lt;15% = comfortable, 15-30% = survivable, &gt;45% = painful</td>
+                </tr>
+                <tr>
+                  <td><strong>Avg Drawdown</strong></td>
+                  <td>Mean depth of all drawdowns</td>
+                  <td>Should remain &lt;50% of the max drawdown level</td>
+                </tr>
+                <tr>
+                  <td><strong>Max DD Duration</strong></td>
+                  <td>Longest time to recover to new high</td>
+                  <td>&lt;3 months is good. &gt;12 months is very tough psychologically</td>
+                </tr>
+                <tr>
+                  <td><strong>Recovery Factor</strong></td>
+                  <td>Total return / Max Drawdown</td>
+                  <td>Target &gt;3.0 (meaning total gains exceed the worst drawdown by 3x)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="analytics" id="complete-analytics">
+            <label for="complete-analytics">Mark Section 09 as Completed • Est. Reading Time: 4 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 10: COMMON TRAPS — HOW BACKTESTS LIE -->
+        <section class="section" id="traps">
+          <div class="section-header">
+            <span class="section-num">10</span>
+            <h2>Common Traps — How Backtests Lie</h2>
+          </div>
+          
+          <h3>Lookahead Bias — The Silent Killer</h3>
+          <div class="callout callout-danger">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+            <div class="callout-content">
+              <strong>Definition:</strong> Using information in your signal calculation that would not have been available at trade execution time.<br><br>
+              <strong>Classic Example:</strong> Generating a signal using today's closing price, then "buying" at today's close. In reality, you only know the close after the market has closed.<br><br>
+              <strong>Fix:</strong> Always shift your signals vector: <code>df['signal'].shift(1)</code>. This ensures you execute tomorrow using today's market close signal.
+            </div>
+          </div>
+          
+          <h3>Curve-Fitting / Overfitting</h3>
+          <div class="callout callout-danger">
+            <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+            <div class="callout-content">
+              <strong>Definition:</strong> Tuning parameters until the strategy looks perfect on historical data. The model memorizes history instead of learning a real edge.<br><br>
+              <strong>Signs:</strong> Strategy has 5+ parameters. Returns are suspiciously smooth. Tiny parameter changes dramatically alter results. Sharpe drops &gt;40% on OOS data.<br><br>
+              <strong>Fix:</strong> Keep strategies simple (2–3 parameters). If OOS Sharpe is &lt;60% of IS Sharpe, the strategy is overfit.
+            </div>
+          </div>
+          
+          <h3>Survivorship Bias</h3>
+          <p>Testing on current index constituents (e.g. Nifty 50) ignores stocks that were delisted, merged, or went bankrupt. Your universe is biased toward survivors. Returns can be overstated by 1–3% CAGR. Just be aware and discount your returns slightly.</p>
+          
+          <h3>Other Traps</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Trap</th>
+                  <th>What happens</th>
+                  <th>Fix</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Too few trades</strong></td>
+                  <td>5 trades with good results = luck, not signal</td>
+                  <td>Minimum 30 trades; 100+ preferred for statistical confidence</td>
+                </tr>
+                <tr>
+                  <td><strong>Ignoring costs</strong></td>
+                  <td>Daily-signal strategies look great; costs eat all returns</td>
+                  <td>Model commissions + slippage explicitly before declaring success</td>
+                </tr>
+                <tr>
+                  <td><strong>Data snooping</strong></td>
+                  <td>Testing 100 variations — some look great by pure chance</td>
+                  <td>Fewer variations, strict IS/OOS separation</td>
+                </tr>
+                <tr>
+                  <td><strong>Regime mismatch</strong></td>
+                  <td>Strategy trained in a bull market fails in a bear market</td>
+                  <td>Include at least one bear market period in IS data</td>
+                </tr>
+                <tr>
+                  <td><strong>Ignoring liquidity</strong></td>
+                  <td>Backtesting on thinly traded small-caps with no fills</td>
+                  <td>Filter: 20-day average volume &gt; ₹5 crore before testing</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="section-completion-wrapper">
+            <input type="checkbox" class="section-complete-checkbox" data-section="traps" id="complete-traps">
+            <label for="complete-traps">Mark Section 10 as Completed • Est. Reading Time: 5 mins</label>
+          </div>
+        </section>
+        
+        <!-- SECTION 11: PYTHON QUANT TOOLKIT -->
+        <section class="section" id="toolkit">
+          <div class="section-header">
+            <span class="section-num">11</span>
+            <h2>Python Quant Toolkit — Copy & Use</h2>
+          </div>
+          <p>This production-ready utility toolkit calculates technical indicators, computes risk-adjusted performance metrics, and runs cointegration checks for pairs trading. Copy and paste this directly into your Python files.</p>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-title">quant_toolkit.py</span>
+              <span class="code-lang-label">Python</span>
+            </div>
+            <pre><code class="language-python">import pandas as pd
+import numpy as np
+from statsmodels.tsa.stattools import coint
+
+def compute_indicators(df):
+    """
+    Computes moving averages, ATR, RSI, MACD, and Bollinger Bands with standard definitions.
+    """
+    h = df['High']; l = df['Low']; c = df['Close']
+    data = df.copy()
+
+    # Moving Averages
+    for n in [10, 20, 50, 200]:
+        data[f'SMA_{n}'] = c.rolling(n).mean()
+        data[f'EMA_{n}'] = c.ewm(span=n, adjust=False).mean()
+
+    # ATR (Average True Range)
+    prev_c = c.shift(1)
+    tr     = pd.concat([h-l, (h-prev_c).abs(), (l-prev_c).abs()], axis=1).max(axis=1)
+    data['ATR_14'] = tr.ewm(alpha=1/14, adjust=False).mean()
+
+    # RSI (Wilder smoothing via ewm)
+    delta = c.diff()
+    gain  = delta.clip(lower=0).ewm(alpha=1/14, adjust=False).mean()
+    loss  = (-delta.clip(upper=0)).ewm(alpha=1/14, adjust=False).mean()
+    data['RSI_14'] = 100 - (100 / (1 + gain / loss))
+
+    # MACD
+    ema12 = c.ewm(span=12, adjust=False).mean()
+    ema26 = c.ewm(span=26, adjust=False).mean()
+    data['MACD']        = ema12 - ema26
+    data['MACD_signal'] = data['MACD'].ewm(span=9, adjust=False).mean()
+    data['MACD_hist']   = data['MACD'] - data['MACD_signal']
+
+    # Bollinger Bands
+    sma20 = c.rolling(20).mean()
+    std20 = c.rolling(20).std()
+    data['BB_upper']  = sma20 + 2 * std20
+    data['BB_middle'] = sma20
+    data['BB_lower']  = sma20 - 2 * std20
+    data['BB_width']  = (data['BB_upper'] - data['BB_lower']) / sma20
+
+    # ADX
+    up   = h - h.shift(1)
+    down = l.shift(1) - l
+    pdm  = up.where((up > down) & (up > 0), 0)
+    ndm  = down.where((down > up) & (down > 0), 0)
+    pdi  = 100 * pdm.ewm(alpha=1/14, adjust=False).mean() / data['ATR_14']
+    ndi  = 100 * ndm.ewm(alpha=1/14, adjust=False).mean() / data['ATR_14']
+    dx   = 100 * (pdi - ndi).abs() / (pdi + ndi)
+    data['ADX_14'] = dx.ewm(alpha=1/14, adjust=False).mean()
+
+    return data
+
+def backtest_metrics(returns, risk_free=0.07):
+    """
+    Computes CAGR, Sharpe Ratio, Sortino Ratio, Calmar, Max Drawdown, and Profit Factor.
+    """
+    r        = returns.dropna()
+    cum      = (1 + r).cumprod()
+    n_years  = len(r) / 252
+    daily_rf = risk_free / 252
+
+    total_return = cum.iloc[-1] - 1
+    cagr         = cum.iloc[-1] ** (1 / n_years) - 1
+    vol_ann      = r.std() * np.sqrt(252)
+
+    # Downside deviation (for Sortino)
+    downside = r[r < daily_rf]
+    sortino_vol = downside.std() * np.sqrt(252) if len(downside) > 0 else 1e-9
+
+    # Drawdown
+    rolling_max = cum.cummax()
+    drawdown    = (cum - rolling_max) / rolling_max
+    max_dd      = drawdown.min()
+    dd_dur      = (drawdown < 0).groupby((drawdown < 0 != (drawdown < 0).shift()).cumsum()).sum().max()
+
+    excess = cagr - risk_free
+    sharpe  = excess / vol_ann      if vol_ann != 0      else 0
+    sortino = excess / sortino_vol  if sortino_vol != 0  else 0
+    calmar  = cagr / abs(max_dd)    if max_dd != 0        else 0
+
+    in_mkt       = r[r != 0]
+    win_rate     = (in_mkt > 0).mean()
+    gross_profit = in_mkt[in_mkt > 0].sum()
+    gross_loss   = abs(in_mkt[in_mkt < 0].sum())
+    pf           = gross_profit / gross_loss if gross_loss != 0 else np.inf
+    expectancy   = win_rate * in_mkt[in_mkt > 0].mean() + (1 - win_rate) * in_mkt[in_mkt < 0].mean()
+
+    return {
+        'total_return_pct': round(total_return * 100, 2), 
+        'cagr_pct': round(cagr * 100, 2),
+        'sharpe': round(sharpe, 3),   
+        'sortino': round(sortino, 3), 
+        'calmar': round(calmar, 3),
+        'max_dd_pct': round(max_dd * 100, 2), 
+        'max_dd_days': int(dd_dur),
+        'win_rate_pct': round(win_rate * 100, 2), 
+        'profit_factor': round(pf, 3),
+        'expectancy_pct': round(expectancy * 100, 4)
+    }
+
+def pairs_analysis(price_a, price_b, lookback=60):
+    """
+    Runs OLS regression and tests for Granger Cointegration.
+    """
+    import statsmodels.api as sm
+    score, pvalue, _ = coint(price_a, price_b)
+    
+    if pvalue > 0.05:
+        print("⚠ Not cointegrated — do not trade this pair")
+        return None
+
+    result      = sm.OLS(price_a, sm.add_constant(price_b)).fit()
+    hedge_ratio = result.params[price_b.name]
+    spread      = price_a - hedge_ratio * price_b
+
+    mu     = spread.rolling(lookback).mean()
+    sd     = spread.rolling(lookback).std() # standard deviation
+    zscore = (spread - mu) / sd
+
+    signal = pd.Series(0, index=zscore.index)
+    signal[zscore < -2.0] =  1   # long spread
+    signal[zscore >  2.0] = -1   # short spread
+    signal[(zscore > -0.5) & (zscore < 0.5)] = 0  # exit zone
+    signal = signal.ffill()
+
+    return {'spread': spread, 'zscore': zscore, 'signal': signal, 'hedge_ratio': hedge_ratio}</code></pre>
+          </div>
+          
+          <h3>Useful Libraries Reference</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Library</th>
+                  <th>Install</th>
+                  <th>Use For</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>backtesting.py</strong></td>
+                  <td><code>pip install backtesting</code></td>
+                  <td>Clean event-driven backtesting with built-in interactive HTML charts</td>
+                </tr>
+                <tr>
+                  <td><strong>vectorbt</strong></td>
+                  <td><code>pip install vectorbt</code></td>
+                  <td>Extremely fast vectorized backtesting and parameter optimization grids</td>
+                </tr>
+                <tr>
+                  <td><strong>statsmodels</strong></td>
+                  <td><code>pip install statsmodels</code></td>
+                  <td>Cointegration test parameters, OLS regressions, ARIMA time series models</td>
+                </tr>
+                <tr>
+                  <td><strong>pyfolio-reloaded</strong></td>
+                  <td><code>pip install pyfolio-reloaded</code></td>
+                  <td>Hedge-fund tear sheets (rolling Sharpe, risk allocations, drawdown curves)</td>
+                </tr>
+                <tr>
+                  <td><strong>plotly</strong></td>
+                  <td><code>pip install plotly</code></td>
+                  <td>High-end zoomable and hoverable charting canvas overlays</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <!-- FOOTER -->
+        <footer class="app-footer">
+          <h3>Built with Python, Quant Research & Too Much Coffee ☕</h3>
+          <p class="footer-desc">Made by Aryan Jayanth • The Ultimate Algo Trading Handbook • Version 1.0 • 2026</p>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;">Distributed under the MIT Open Source License. Standard educational disclaimer applies.</p>
+        </footer>
+        
+      </main>
+      
+    </div>
+    
+  </div>
+  
+  <!-- SEARCH MODAL OVERLAY -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Type to search documentation... (Esc to close)">
+      </div>
+      <div class="search-results" id="search-results">
+        <div class="search-empty">Type at least 2 characters to search...</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Prism.js Syntax Highlighter scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  
+  <!-- Core UI and Search modules -->
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/search.js"></script>
+  
+  <!-- Register Service Worker for PWA offline capabilities -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('pwa/sw.js')
+          .then(reg => console.log('ServiceWorker registered successfully', reg.scope))
+          .catch(err => console.error('ServiceWorker registration failed', err));
+      });
+    }
+  </script>
+</body>
+</html>

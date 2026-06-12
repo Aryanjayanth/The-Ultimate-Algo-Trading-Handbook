@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelly Criterion Calculator | The Ultimate Algo Trading Handbook</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  
+  <style>
+    .calculator-container {
+      max-width: 600px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .allocation-display {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-primary);
+      background-color: var(--bg-secondary);
+      text-align: center;
+    }
+    
+    .alloc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .alloc-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--cyan-accent);
+    }
+    
+    .alloc-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../index.html" class="brand-wrapper">
+          <span class="brand-title">Algo Trading Handbook</span>
+          <span class="brand-sub">Aryan Jayanth / Calculators</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <a href="../index.html" class="btn btn-secondary" style="padding: 0.45rem 1rem; font-size: 0.82rem;">Back to Handbook</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Content container -->
+    <div class="calculator-container">
+      <a href="../index.html" class="back-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Back to Handbook</span>
+      </a>
+      
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h2 style="font-size: 2.25rem;">Kelly Criterion Calculator</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Compute mathematical allocation boundaries to maximize the long-term compounded growth rate.</p>
+      </div>
+      
+      <div class="card">
+        <!-- Input 1 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="win-input">Win Rate / Probability (%)</label>
+            <span id="win-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">55%</span>
+          </div>
+          <input type="range" class="range-slider" id="win-input" min="20" max="95" value="55" step="1">
+        </div>
+        
+        <!-- Input 2 -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between;">
+            <label for="rr-input">Reward-Risk Ratio (Avg Win / Avg Loss)</label>
+            <span id="rr-val" style="font-family: var(--font-mono); color: var(--cyan-accent);">2.0x</span>
+          </div>
+          <input type="range" class="range-slider" id="rr-input" min="0.5" max="5.0" value="2.0" step="0.1">
+        </div>
+        
+        <!-- Output widget -->
+        <div class="allocation-display">
+          <div class="alloc-grid">
+            <div style="border-right: 1px solid var(--border-primary);">
+              <div class="alloc-label">Full Kelly %</div>
+              <div class="alloc-value" id="full-kelly">32.5%</div>
+            </div>
+            <div>
+              <div class="alloc-label">Half Kelly %</div>
+              <div class="alloc-value" id="half-kelly" style="color: var(--green-accent);">16.2%</div>
+            </div>
+          </div>
+          
+          <p id="kelly-desc" style="font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.5;">Half Kelly is recommended for actual portfolios to protect capital from high volatility drawdowns.</p>
+        </div>
+        
+        <!-- Callout Warning -->
+        <div class="callout callout-warn" id="kelly-warning" style="margin-top: 1.5rem; display: none;">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div class="callout-content">
+            <strong>Excessive Allocation Warning</strong>
+            Kelly recommendations exceed 25%. Allocating large fractions to a single model exposes the portfolio to extreme drawdown or ruin risks if market parameters shift.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Math Box -->
+      <div class="card" style="margin-top: 1.5rem; background: transparent; padding: 1.25rem 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Formula Reference</span>
+        <code style="font-family: var(--font-mono); font-size: 0.85rem; display: block; padding: 0.5rem; background-color: var(--bg-tertiary);">Kelly Percentage = Win Rate - ((1 - Win Rate) / Reward-Risk Ratio)</code>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../assets/js/core.js"></script>
+  <script>
+    const winInput = document.getElementById('win-input');
+    const rrInput = document.getElementById('rr-input');
+    
+    const winVal = document.getElementById('win-val');
+    const rrVal = document.getElementById('rr-val');
+    
+    const fullKelly = document.getElementById('full-kelly');
+    const halfKelly = document.getElementById('half-kelly');
+    const kellyDesc = document.getElementById('kelly-desc');
+    const warning = document.getElementById('kelly-warning');
+    
+    function calculateKelly() {
+      const W = parseFloat(winInput.value) / 100;
+      const R = parseFloat(rrInput.value);
+      
+      winVal.textContent = Math.round(W * 100) + '%';
+      rrVal.textContent = R.toFixed(1) + 'x';
+      
+      const k = W - ((1 - W) / R);
+      const kPct = k * 100;
+      
+      if (kPct <= 0) {
+        fullKelly.textContent = "0.0%";
+        halfKelly.textContent = "0.0%";
+        fullKelly.style.color = "var(--red-accent)";
+        halfKelly.style.color = "var(--red-accent)";
+        kellyDesc.textContent = "Negative expectancy. The strategy does not exhibit an edge under these parameters. Do not trade.";
+        warning.style.display = "none";
+      } else {
+        fullKelly.textContent = kPct.toFixed(1) + '%';
+        halfKelly.textContent = (kPct / 2).toFixed(1) + '%';
+        fullKelly.style.color = "var(--cyan-accent)";
+        halfKelly.style.color = "var(--green-accent)";
+        
+        kellyDesc.textContent = `A Half Kelly size of ${(kPct / 2).toFixed(1)}% balances growth rate optimization against capital preservation.`;
+        
+        if (kPct > 25) {
+          warning.style.display = "flex";
+        } else {
+          warning.style.display = "none";
+        }
+      }
+    }
+    
+    winInput.addEventListener('input', calculateKelly);
+    rrInput.addEventListener('input', calculateKelly);
+    
+    // Initial run
+    calculateKelly();
+  </script>
+</body>
+</html>
