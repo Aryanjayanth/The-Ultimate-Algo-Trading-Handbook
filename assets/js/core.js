@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Collapsible Code Blocks
   initCollapsibleCode();
+
+  // Google Analytics Tracking
+  initGoogleAnalytics();
 });
 
 /* ── Theme management ── */
@@ -394,4 +397,29 @@ function initCollapsibleCode() {
       }
     }
   });
+}
+
+/* ── Google Analytics Integration ── */
+function initGoogleAnalytics() {
+  const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // Replace with your Google Analytics Measurement ID (e.g. G-74XG6K5T8W)
+  
+  if (GA_MEASUREMENT_ID === 'G-XXXXXXXXXX' || !GA_MEASUREMENT_ID) {
+    console.log('Google Analytics: Tracker initialized in debug mode. Replace G-XXXXXXXXXX in assets/js/core.js to track pages.');
+    return;
+  }
+  
+  // Inject the Google Tag Manager script tag
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+  
+  // Initialize dataLayer and the gtag function
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function() {
+    dataLayer.push(arguments);
+  };
+  
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID);
 }
