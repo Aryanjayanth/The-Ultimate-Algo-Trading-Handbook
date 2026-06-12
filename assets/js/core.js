@@ -401,7 +401,7 @@ function initCollapsibleCode() {
 
 /* ── Google Analytics Integration ── */
 function initGoogleAnalytics() {
-  const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // Replace with your Google Analytics Measurement ID (e.g. G-74XG6K5T8W)
+  const GA_MEASUREMENT_ID = 'G-DBEQ8SHZD7'; // Replace with your Google Analytics Measurement ID (e.g. G-74XG6K5T8W)
   
   if (GA_MEASUREMENT_ID === 'G-XXXXXXXXXX' || !GA_MEASUREMENT_ID) {
     console.log('Google Analytics: Tracker initialized in debug mode. Replace G-XXXXXXXXXX in assets/js/core.js to track pages.');
