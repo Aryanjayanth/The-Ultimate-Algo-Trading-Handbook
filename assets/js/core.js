@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Google Analytics Tracking
   initGoogleAnalytics();
+
+  // Mobile Experience Notice
+  initMobileExperienceNotice();
 });
 
 /* ── Theme management ── */
@@ -422,4 +425,70 @@ function initGoogleAnalytics() {
   
   gtag('js', new Date());
   gtag('config', GA_MEASUREMENT_ID);
+}
+
+/* ── Mobile Experience Notice ── */
+function initMobileExperienceNotice() {
+  if (window.innerWidth > 768) return;
+  
+  const isDismissed = localStorage.getItem('mobile-notice-dismissed');
+  if (isDismissed === 'true') return;
+  
+  const noticeOverlay = document.createElement('div');
+  noticeOverlay.id = 'mobile-notice-overlay';
+  noticeOverlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 7, 18, 0.95);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    transition: opacity var(--transition-normal);
+  `;
+  
+  const noticeCard = document.createElement('div');
+  noticeCard.className = 'card';
+  noticeCard.style.cssText = `
+    max-width: 400px;
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  `;
+  
+  noticeCard.innerHTML = `
+    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💻</div>
+    <h3 style="font-size: 1.35rem; font-weight: 800; margin: 0; display: inline-block;">Optimal Experience Notice</h3>
+    <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.5; font-family: var(--font-sans);">
+      This handbook and its interactive calculators are highly optimized for **laptops, desktops, and tablets**. For the best learning and layout experience, we recommend opening it on a larger screen.
+    </p>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
+      <button id="mobile-notice-continue" class="btn btn-secondary" style="width: 100%; padding: 0.65rem; font-size: 0.88rem; border-color: var(--border-secondary);">
+        Continue on Mobile
+      </button>
+    </div>
+  `;
+  
+  noticeOverlay.appendChild(noticeCard);
+  document.body.appendChild(noticeOverlay);
+  
+  const originalOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  
+  const dismissBtn = noticeCard.querySelector('#mobile-notice-continue');
+  dismissBtn.addEventListener('click', () => {
+    localStorage.setItem('mobile-notice-dismissed', 'true');
+    noticeOverlay.style.opacity = '0';
+    setTimeout(() => {
+      noticeOverlay.remove();
+      document.body.style.overflow = originalOverflow;
+    }, 300);
+  });
 }
