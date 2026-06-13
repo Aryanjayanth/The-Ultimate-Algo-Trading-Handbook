@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://handbook.algo.quant/index.html</loc>
+    <loc>https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/index.html</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://handbook.algo.quant/calculators/sharpe.html</loc>
+    <loc>https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/calculators/sharpe.html</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://handbook.algo.quant/calculators/cagr.html</loc>
+    <loc>https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/calculators/cagr.html</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://handbook.algo.quant/calculators/kelly.html</loc>
+    <loc>https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/calculators/kelly.html</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://handbook.algo.quant/calculators/position-size.html</loc>
+    <loc>https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/calculators/position-size.html</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://handbook.algo.quant/calculators/drawdown.html</loc>
+    <loc>https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/calculators/drawdown.html</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://handbook.algo.quant/sitemap.xml
+Sitemap: https://aryanjayanth.github.io/The-Ultimate-Algo-Trading-Handbook/sitemap.xml
